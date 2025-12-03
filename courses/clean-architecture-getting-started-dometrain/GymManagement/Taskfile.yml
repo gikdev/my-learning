@@ -5,4 +5,6 @@ tasks:
   run:
     aliases: [default]
     cmds:
-      - dotnet watch run --project src/GymManagement.Api
+      - dotnet run --project src/GymManagement.Api
+
+  dev: dotnet watch run --project src/GymManagement.Api

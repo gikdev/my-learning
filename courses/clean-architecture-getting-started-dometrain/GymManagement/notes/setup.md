@@ -31,4 +31,9 @@ dotnet add src/GymManagement.Application package Microsoft.Extensions.Dependency
 dotnet add src/GymManagement.Api reference src/GymManagement.Infrastructure
 dotnet add src/GymManagement.Application package MediatR
 dotnet add src/GymManagement.Application package ErrorOr
+dotnet add src/GymManagement.Infrastructure package Microsoft.EntityFrameworkCore
+dotnet add src/GymManagement.Infrastructure package Microsoft.EntityFrameworkCore.Sqlite
+dotnet add src/GymManagement.Api package Microsoft.EntityFrameworkCore.Design
+dotnet ef migrations add InitialCreate -p src/GymManagement.Infrastructure -s src/GymManagement.Api
+dotnet ef database update -p src/GymManagement.Infrastructure -s src/GymManagement.Api
 ```

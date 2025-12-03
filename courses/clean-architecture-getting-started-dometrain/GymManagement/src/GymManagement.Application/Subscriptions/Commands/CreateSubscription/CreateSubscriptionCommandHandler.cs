@@ -13,7 +13,10 @@ public class CreateSubscriptionCommandHandler(
         CreateSubscriptionCommand request,
         CancellationToken cancellationToken
     ) {
-        var subscription = new Subscription { Id = Guid.NewGuid() };
+        var subscription = new Subscription {
+            Id = Guid.NewGuid(),
+            SubscriptionType = request.SubscriptionType,
+        };
 
         await subscriptionsRepository.AddSubscriptionAsync(subscription);
         await unitOfWork.CommitChangesAsync();
