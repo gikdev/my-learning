@@ -1,0 +1,8 @@
+version: '3'
+
+tasks:
+  # Run the API project.
+  run:
+    aliases: [default]
+    cmds:
+      - dotnet watch run --project src/GymManagement.Api
