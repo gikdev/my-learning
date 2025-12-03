@@ -20,7 +20,7 @@ public class SubscriptionsController(
         var result = await mediator.Send(command);
 
         return result.MatchFirst(
-            guid => Ok(new SubscriptionResponse(guid, request.SubscriptionType)),
+            subscription => Ok(new SubscriptionResponse(subscription.Id, request.SubscriptionType)),
             _ => Problem()
         );
     }
