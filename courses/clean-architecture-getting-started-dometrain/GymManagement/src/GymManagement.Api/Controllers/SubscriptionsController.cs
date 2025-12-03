@@ -17,8 +17,11 @@ public class SubscriptionsController(
             request.AdminId
         );
 
-        var response = await mediator.Send(command);
+        var result = await mediator.Send(command);
 
-        return Ok(response);
+        return result.MatchFirst(
+            guid => Ok(new SubscriptionResponse(guid, request.SubscriptionType)),
+            _ => Problem()
+        );
     }
 }

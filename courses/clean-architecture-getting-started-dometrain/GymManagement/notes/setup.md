@@ -30,4 +30,5 @@ dotnet sln add src/GymManagement.Contracts/GymManagement.Contracts.csproj
 dotnet add src/GymManagement.Application package Microsoft.Extensions.DependencyInjection.Abstractions
 dotnet add src/GymManagement.Api reference src/GymManagement.Infrastructure
 dotnet add src/GymManagement.Application package MediatR
+dotnet add src/GymManagement.Application package ErrorOr
 ```
