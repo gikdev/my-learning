@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymManagement.Infrastructure.Migrations;
 
 [DbContext(typeof(GymManagementDbContext))]
-[Migration("20251203114928_InitialCreate")]
-partial class InitialCreate {
+[Migration("20251203124028_Enhance")]
+partial class Enhance {
     /// <inheritdoc />
     protected override void BuildTargetModel(ModelBuilder modelBuilder) {
 #pragma warning disable 612, 618
@@ -20,12 +20,14 @@ partial class InitialCreate {
 
         modelBuilder.Entity("GymManagement.Domain.Subscriptions.Subscription", b => {
                 b.Property<Guid>("Id")
-                    .ValueGeneratedOnAdd()
                     .HasColumnType("TEXT");
 
-                b.Property<string>("SubscriptionType")
-                    .IsRequired()
-                    .HasColumnType("TEXT");
+                b.Property<int>("SubscriptionType")
+                    .HasColumnType("INTEGER");
+
+                b.Property<Guid>("_adminId")
+                    .HasColumnType("TEXT")
+                    .HasColumnName("AdminId");
 
                 b.HasKey("Id");
 
