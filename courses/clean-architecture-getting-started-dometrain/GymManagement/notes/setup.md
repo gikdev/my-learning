@@ -27,4 +27,6 @@ dotnet sln add src/GymManagement.Infrastructure/GymManagement.Infrastructure.csp
 dotnet sln add src/GymManagement.Domain/GymManagement.Domain.csproj
 dotnet sln add src/GymManagement.Contracts/GymManagement.Contracts.csproj
 
+dotnet add src/GymManagement.Application package Microsoft.Extensions.DependencyInjection.Abstractions
+dotnet add src/GymManagement.Api reference src/GymManagement.Infrastructure
 ```
