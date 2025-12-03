@@ -1,0 +1,16 @@
+version: '3'
+
+tasks:
+  # Run the API project.
+    run:
+        aliases: [default]
+        cmds:
+            - dotnet run --project src/GymManagement.Api
+
+    dev: dotnet watch run --project src/GymManagement.Api
+
+    docs-build: cd docs && docfx build
+    docs-serve: cd docs && docfx serve _site
+    docs:
+        - task: docs-build
+        - task: docs-serve
