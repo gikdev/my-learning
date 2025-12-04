@@ -19,6 +19,10 @@ public static class DependencyInjection {
             );
         }
 
+        services.AddSingleton<IDbConnectionFactory>(_ =>
+            new NpgsqlConnectionFactory(connectionString)
+        );
+
         services.AddDbContext<GymManagementDbContext>(options => {
             options.UseNpgsql(connectionString);
         });
