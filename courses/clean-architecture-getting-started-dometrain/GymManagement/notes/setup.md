@@ -18,7 +18,7 @@ dotnet add GymManagement.Api reference GymManagement.Application
 dotnet add GymManagement.Infrastructure reference GymManagement.Application
 dotnet add GymManagement.Application reference GymManagement.Domain
 dotnet add GymManagement.Api reference GymManagement.Contracts
-dotnet add src/GymManagement.Api reference src/GymManagement.Infrastructure
+dotnet add GymManagement.Api reference GymManagement.Infrastructure
 
 cd ..
 
