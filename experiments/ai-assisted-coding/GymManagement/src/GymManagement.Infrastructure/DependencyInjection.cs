@@ -3,13 +3,24 @@ using GymManagement.Infrastructure.Common.Persistence;
 using GymManagement.Infrastructure.Subscriptions.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 namespace GymManagement.Infrastructure;
 
 public static class DependencyInjection {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services) {
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration
+    ) {
+        var connectionString = configuration.GetConnectionString("Default");
+        if (string.IsNullOrWhiteSpace(connectionString)) {
+            throw new InvalidOperationException(
+                "Connection string 'Default' was not found."
+            );
+        }
+
         services.AddDbContext<GymManagementDbContext>(options => {
-            options.UseSqlite("Data Source = GymManagement.db");
+            options.UseNpgsql(connectionString);
         });
         services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
         services.AddScoped<IUnitOfWork>(serviceProvider =>
