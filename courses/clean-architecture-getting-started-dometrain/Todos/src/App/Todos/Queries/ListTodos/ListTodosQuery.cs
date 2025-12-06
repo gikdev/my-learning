@@ -4,4 +4,4 @@ using MediatR;
 
 namespace App.Todos.Queries.ListTodos;
 
-public record ListTodosQuery() : IRequest<ErrorOr<IEnumerable<Todo>>>;
+public record ListTodosQuery : IRequest<ErrorOr<IEnumerable<Todo>>>;
