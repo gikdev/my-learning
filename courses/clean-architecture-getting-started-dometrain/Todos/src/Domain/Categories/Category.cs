@@ -4,11 +4,6 @@ using Throw;
 namespace Domain.Categories;
 
 public class Category {
-    private readonly List<Guid> _todoIds = [];
-
-    public Guid Id { get; private set; }
-    public string Title { get; private set; }
-
     public Category(string title) {
         if (string.IsNullOrWhiteSpace(title))
             throw new ArgumentException("Title cannot be empty", nameof(title));
@@ -17,22 +12,34 @@ public class Category {
         Title = title;
     }
 
+    public List<Guid> TodoIds { get; } = [];
+
+    public Guid Id { get; }
+    public string Title { get; private set; }
+
+    public void Rename(string newTitle) {
+        newTitle.Throw().IfNullOrWhiteSpace(s => s);
+
+        Title = newTitle;
+    }
+
     public void AddTodo(Todo todo) {
-        _todoIds.Throw().IfContains(todo.Id);
+        TodoIds.Throw().IfContains(todo.Id);
 
         todo.ChangeCategory(Id);
 
-        _todoIds.Add(todo.Id);
+        TodoIds.Add(todo.Id);
     }
 
-    public bool HasTodo(Guid todoId)
-        => _todoIds.Contains(todoId);
+    public bool HasTodo(Guid todoId) {
+        return TodoIds.Contains(todoId);
+    }
 
     public void RemoveTodo(Todo todo) {
-        _todoIds.Throw().IfNotContains(todo.Id);
+        TodoIds.Throw().IfNotContains(todo.Id);
 
         todo.RemoveCategory();
 
-        _todoIds.Remove(todo.Id);
+        TodoIds.Remove(todo.Id);
     }
 }
