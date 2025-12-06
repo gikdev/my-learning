@@ -13,7 +13,9 @@ public class ChangeTodoImportanceCommandHandler(
         var todo = await todosRepository.GetByIdAsync(request.TodoId);
         if (todo is null) return Error.NotFound(description: "Todo not found");
 
-        todo.ChangeImportance(request.Importance);
+        var result = todo.ChangeImportance(request.Importance);
+
+        if (result.IsError) return result.Errors;
 
         await todosRepository.UpdateAsync(todo);
         await unitOfWork.CommitChangesAsync();

@@ -5,8 +5,7 @@ namespace Domain.Categories;
 
 public class Category {
     public Category(string title) {
-        if (string.IsNullOrWhiteSpace(title))
-            throw new ArgumentException("Title cannot be empty", nameof(title));
+        title.Throw().IfNullOrWhiteSpace(s => s);
 
         Id = Guid.NewGuid();
         Title = title;
