@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace Domain.Todo;
+namespace Domain.Todos;
 
 public static class TodoErrors
 {

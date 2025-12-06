@@ -1,9 +1,10 @@
 using ErrorOr;
+using Throw;
 
-namespace Domain.Todo;
+namespace Domain.Todos;
 
 public class Todo {
-    private readonly Guid? _categoryId;
+    private Guid? _categoryId;
 
     public Guid Id { get; private set; }
     public string Title { get; private set; }
@@ -11,8 +12,7 @@ public class Todo {
     public TodoImportance Importance { get; private set; }
 
     public Todo(string title, TodoImportance? importance = null) {
-        if (string.IsNullOrWhiteSpace(title))
-            throw new ArgumentException("Title cannot be empty", nameof(title));
+        title.Throw().IfNullOrWhiteSpace(s => s);
 
         Id = Guid.NewGuid();
         Title = title;
@@ -31,11 +31,14 @@ public class Todo {
     }
 
     public void Rename(string newTitle) {
-        if (string.IsNullOrWhiteSpace(newTitle))
-            throw new ArgumentException("newTitle cannot be empty", nameof(newTitle));
+        newTitle.Throw().IfNullOrWhiteSpace(s => s);
 
         Title = newTitle;
     }
 
-   public void ChangeCategory() {}
+    public void ChangeCategory(Guid categoryId)
+        => _categoryId = categoryId;
+
+    public void RemoveCategory()
+        => _categoryId = null;
 }

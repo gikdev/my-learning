@@ -1,6 +1,6 @@
 using Ardalis.SmartEnum;
 
-namespace Domain.Todo;
+namespace Domain.Todos;
 
 public class TodoImportance : SmartEnum<TodoImportance> {
     public static readonly TodoImportance Low = new(nameof(Low), 0);
