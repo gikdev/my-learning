@@ -8,4 +8,3 @@ public class RenameTodoCommandHandler : IRequestHandler<RenameTodoCommand, Error
         throw new NotImplementedException();
     }
 }
-

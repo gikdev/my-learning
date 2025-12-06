@@ -8,4 +8,3 @@ public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryComman
         throw new NotImplementedException();
     }
 }
-

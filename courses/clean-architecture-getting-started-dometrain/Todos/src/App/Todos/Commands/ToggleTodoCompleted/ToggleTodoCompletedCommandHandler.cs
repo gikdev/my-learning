@@ -8,4 +8,3 @@ public class ToggleTodoCompletedCommandHandler : IRequestHandler<ToggleTodoCompl
         throw new NotImplementedException();
     }
 }
-

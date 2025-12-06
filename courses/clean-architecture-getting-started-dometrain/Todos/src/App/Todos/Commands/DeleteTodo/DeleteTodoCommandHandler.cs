@@ -8,4 +8,3 @@ public class DeleteTodoCommandHandler : IRequestHandler<DeleteTodoCommand, Error
         throw new NotImplementedException();
     }
 }
-

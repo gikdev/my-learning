@@ -8,4 +8,3 @@ public class ChangeTodoImportanceCommandHandler : IRequestHandler<ChangeTodoImpo
         throw new NotImplementedException();
     }
 }
-

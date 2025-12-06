@@ -8,4 +8,3 @@ public class RemoveTodoFromCategoryCommandHandler : IRequestHandler<RemoveTodoFr
         throw new NotImplementedException();
     }
 }
-

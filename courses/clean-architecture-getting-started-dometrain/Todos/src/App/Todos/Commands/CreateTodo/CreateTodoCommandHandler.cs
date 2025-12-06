@@ -8,4 +8,3 @@ public class CreateTodoCommandHandler : IRequestHandler<CreateTodoCommand, Error
         throw new NotImplementedException();
     }
 }
-

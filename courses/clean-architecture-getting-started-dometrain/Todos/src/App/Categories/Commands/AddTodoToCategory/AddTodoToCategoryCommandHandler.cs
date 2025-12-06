@@ -8,4 +8,3 @@ public class AddTodoToCategoryCommandHandler : IRequestHandler<AddTodoToCategory
         throw new NotImplementedException();
     }
 }
-

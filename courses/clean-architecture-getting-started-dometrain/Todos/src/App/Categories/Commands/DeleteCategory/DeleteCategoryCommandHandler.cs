@@ -8,4 +8,3 @@ public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryComman
         throw new NotImplementedException();
     }
 }
-
