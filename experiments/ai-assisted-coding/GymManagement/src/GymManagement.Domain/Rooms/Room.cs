@@ -18,4 +18,7 @@ public class Room {
 
     public Guid GymId { get; }
     public int MaxDailySessions { get; }
+
+    // ReSharper disable once UnusedMember.Local
+    private Room() {}
 }

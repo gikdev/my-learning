@@ -1,5 +1,6 @@
 using GymManagement.Application.Common.Interfaces;
 using GymManagement.Infrastructure.Common.Persistence;
+using GymManagement.Infrastructure.Rooms.Persistence;
 using GymManagement.Infrastructure.Subscriptions.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +28,7 @@ public static class DependencyInjection {
             options.UseNpgsql(connectionString);
         });
         services.AddScoped<ISubscriptionsRepository, SubscriptionsRepository>();
+        services.AddScoped<IRoomsRepository, RoomsRepository>();
         services.AddScoped<IUnitOfWork>(serviceProvider =>
             serviceProvider.GetRequiredService<GymManagementDbContext>()
         );
