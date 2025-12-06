@@ -1,5 +1,6 @@
 using App;
 using Infra;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ var app = builder.Build();
 
 app.UseExceptionHandler();
 app.MapOpenApi();
+app.MapScalarApiReference();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

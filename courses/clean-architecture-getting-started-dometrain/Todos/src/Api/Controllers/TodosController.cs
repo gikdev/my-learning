@@ -1,4 +1,120 @@
-﻿namespace Api.Controllers;
+﻿using Api.Mappings;
+using App.Todos.Commands.ChangeTodoImportance;
+using App.Todos.Commands.CreateTodo;
+using App.Todos.Commands.DeleteTodo;
+using App.Todos.Commands.RenameTodo;
+using App.Todos.Commands.ToggleTodoCompleted;
+using App.Todos.Queries.GetTodo;
+using Contracts.Todos;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using DomainTodoImportance = Domain.Todos.TodoImportance;
 
-public class TodosController : ApiController {
+namespace Api.Controllers;
+
+public class TodosController(ISender mediator) : ApiController {
+    [HttpPost(ApiEndpoints.Todos.Create)]
+    public async Task<IActionResult> CreateTodo(CreateTodoRequest request) {
+        var wasOk = DomainTodoImportance.TryFromName(
+            request.Importance.ToString(),
+            out var importance
+        );
+
+        if (!wasOk)
+            return Problem(
+                statusCode: StatusCodes.Status400BadRequest,
+                detail: "Invalid importance"
+            );
+
+        var command = new CreateTodoCommand(request.Title, importance);
+
+        var createTodoResult = await mediator.Send(command);
+
+        return createTodoResult.Match(
+            todo => CreatedAtAction(
+                nameof(GetTodo),
+                new { id = todo.Id },
+                todo.MapToResponse()),
+            Problem
+        );
+    }
+
+    [HttpDelete(ApiEndpoints.Todos.Delete)]
+    public async Task<IActionResult> DeleteTodo(Guid id) {
+        var command = new DeleteTodoCommand(id);
+
+        var deleteTodoResult = await mediator.Send(command);
+
+        return deleteTodoResult.Match(
+            _ => NoContent(),
+            Problem
+        );
+    }
+
+    [HttpGet(ApiEndpoints.Todos.List)]
+    public async Task<IActionResult> ListTodos(
+        [FromQuery] ListTodosRequest request
+    ) {
+        var query = request.MapToQuery();
+
+        var listTodosResult = await mediator.Send(query);
+
+        return listTodosResult.Match(
+            todos => Ok(todos.Select(t => t.MapToResponse())),
+            Problem
+        );
+    }
+
+    [HttpGet(ApiEndpoints.Todos.GetById)]
+    public async Task<IActionResult> GetTodo([FromRoute] Guid id) {
+        var query = new GetTodoQuery(id);
+
+        var getTodoResult = await mediator.Send(query);
+
+        return getTodoResult.Match(
+            todo => Ok(todo.MapToResponse()),
+            Problem
+        );
+    }
+
+    [HttpPatch(ApiEndpoints.Todos.Rename)]
+    public async Task<IActionResult> RenameTodo([FromBody] RenameTodoRequest request, [FromRoute] Guid id) {
+        var command = new RenameTodoCommand(id, request.NewTitle);
+
+        var result = await mediator.Send(command);
+
+        return result.Match(
+            _ => NoContent(),
+            Problem
+        );
+    }
+
+    [HttpPatch(ApiEndpoints.Todos.ChangeImportance)]
+    public async Task<IActionResult> ChangeTodoImportance(
+        [FromBody] ChangeTodoImportanceRequest request,
+        [FromRoute] Guid id
+    ) {
+        var command = new ChangeTodoImportanceCommand(id, request.Importance.ToSmartEnum());
+
+        var result = await mediator.Send(command);
+
+        return result.Match(
+            _ => NoContent(),
+            Problem
+        );
+    }
+
+    [HttpPatch(ApiEndpoints.Todos.ToggleCompleted)]
+    public async Task<IActionResult> ToggleTodoCompleted(
+        [FromRoute] Guid id
+    ) {
+        var command = new ToggleTodoCompletedCommand(id);
+
+        var result = await mediator.Send(command);
+
+        return result.Match(
+            _ => NoContent(),
+            Problem
+        );
+    }
 }

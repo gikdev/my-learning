@@ -1,6 +1,6 @@
 ﻿namespace Api;
 
-public class ApiEndpoints {
+public static class ApiEndpoints {
     private const string ApiBase = "api";
 
     public static class Categories {
@@ -8,14 +8,11 @@ public class ApiEndpoints {
 
         public const string Create = $"{Base}";
         public const string List = $"{Base}";
-        public const string Update = $"{Base}";
         public const string Delete = $"{Base}";
 
-        public const string ChangeImportance = $"{Base}/importance";
-        public const string ToggleCompleted = $"{Base}/completed";
-        public const string Rename = $"{Base}/title";
-
         public const string GetById = $"{Base}/{{id:guid}}";
+
+        public const string Rename = $"{Base}/{{id:guid}}/title";
 
         public const string AddTodo = $"{Base}/{{categoryId:guid}}/todos/{{todoId:guid}}";
         public const string RemoveTodo = $"{Base}/{{categoryId:guid}}/todos/{{todoId:guid}}";
@@ -26,11 +23,12 @@ public class ApiEndpoints {
 
         public const string Create = $"{Base}";
         public const string List = $"{Base}";
-        public const string Update = $"{Base}";
         public const string Delete = $"{Base}";
 
-        public const string Rename = $"{Base}/title";
-
         public const string GetById = $"{Base}/{{id:guid}}";
+
+        public const string Rename = $"{Base}/{{id:guid}}/title";
+        public const string ChangeImportance = $"{Base}/{{id:guid}}/importance";
+        public const string ToggleCompleted = $"{Base}/{{id:guid}}/completed";
     }
 }
