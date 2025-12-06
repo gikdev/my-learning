@@ -1,0 +1,13 @@
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\obj\Debug\net10.0\GymManagement.Domain.csproj.AssemblyReference.cache
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\obj\Debug\net10.0\GymManagement.Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\obj\Debug\net10.0\GymManagement.Domain.AssemblyInfoInputs.cache
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\obj\Debug\net10.0\GymManagement.Domain.AssemblyInfo.cs
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\obj\Debug\net10.0\GymManagement.Domain.csproj.CoreCompileInputs.cache
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\obj\Debug\net10.0\GymManagement.Domain.sourcelink.json
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\bin\Debug\net10.0\GymManagement.Domain.deps.json
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\bin\Debug\net10.0\GymManagement.Domain.dll
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\bin\Debug\net10.0\GymManagement.Domain.pdb
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\obj\Debug\net10.0\GymManagement.Domain.dll
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\obj\Debug\net10.0\refint\GymManagement.Domain.dll
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\obj\Debug\net10.0\GymManagement.Domain.pdb
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Domain\obj\Debug\net10.0\ref\GymManagement.Domain.dll
