@@ -1,0 +1,12 @@
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Contracts\bin\Debug\net10.0\GymManagement.Contracts.deps.json
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Contracts\bin\Debug\net10.0\GymManagement.Contracts.dll
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Contracts\bin\Debug\net10.0\GymManagement.Contracts.pdb
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Contracts\obj\Debug\net10.0\GymManagement.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Contracts\obj\Debug\net10.0\GymManagement.Contracts.AssemblyInfoInputs.cache
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Contracts\obj\Debug\net10.0\GymManagement.Contracts.AssemblyInfo.cs
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Contracts\obj\Debug\net10.0\GymManagement.Contracts.csproj.CoreCompileInputs.cache
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Contracts\obj\Debug\net10.0\GymManagement.Contracts.sourcelink.json
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Contracts\obj\Debug\net10.0\GymManagement.Contracts.dll
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Contracts\obj\Debug\net10.0\refint\GymManagement.Contracts.dll
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Contracts\obj\Debug\net10.0\GymManagement.Contracts.pdb
+E:\-my-stuff\projects\my-learning\courses\clean-architecture-deep-dive-dometrain\GymManagement\src\GymManagement.Contracts\obj\Debug\net10.0\ref\GymManagement.Contracts.dll
