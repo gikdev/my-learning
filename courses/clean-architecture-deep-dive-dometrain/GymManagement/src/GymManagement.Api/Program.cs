@@ -8,8 +8,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddProblemDetails();
 
 builder.Services
-       .AddApplication()
-       .AddInfrastructure();
+    .AddApplication()
+    .AddInfrastructure();
 
 var app = builder.Build();
 

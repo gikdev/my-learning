@@ -7,13 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GymManagement.Api.Controllers;
 
 [Route("gyms/{gymId:guid}/rooms")]
-public class RoomsController : ApiController {
-    private readonly ISender _mediator;
-
-    public RoomsController(ISender mediator) {
-        _mediator = mediator;
-    }
-
+public class RoomsController(ISender mediator) : ApiController {
     [HttpPost]
     public async Task<IActionResult> CreateRoom(
         CreateRoomRequest request,
@@ -22,7 +16,7 @@ public class RoomsController : ApiController {
             gymId,
             request.Name);
 
-        var createRoomResult = await _mediator.Send(command);
+        var createRoomResult = await mediator.Send(command);
 
         return createRoomResult.Match(
             room => Created(
@@ -37,7 +31,7 @@ public class RoomsController : ApiController {
         Guid roomId) {
         var command = new DeleteRoomCommand(gymId, roomId);
 
-        var deleteRoomResult = await _mediator.Send(command);
+        var deleteRoomResult = await mediator.Send(command);
 
         return deleteRoomResult.Match(
             _ => NoContent(),

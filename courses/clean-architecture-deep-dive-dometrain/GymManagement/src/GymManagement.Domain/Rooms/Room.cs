@@ -1,12 +1,6 @@
 namespace GymManagement.Domain.Rooms;
 
 public class Room {
-    public Guid Id { get; }
-    public string Name { get; } = null!;
-
-    public Guid GymId { get; }
-    public int MaxDailySessions { get; }
-
     public Room(
         string name,
         Guid gymId,
@@ -17,4 +11,10 @@ public class Room {
         MaxDailySessions = maxDailySessions;
         Id = id ?? Guid.NewGuid();
     }
+
+    public Guid Id { get; }
+    public string Name { get; } = null!;
+
+    public Guid GymId { get; }
+    public int MaxDailySessions { get; }
 }

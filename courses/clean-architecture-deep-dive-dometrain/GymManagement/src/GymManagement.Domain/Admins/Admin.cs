@@ -4,10 +4,6 @@ using Throw;
 namespace GymManagement.Domain.Admins;
 
 public class Admin {
-    public Guid UserId { get; }
-    public Guid? SubscriptionId { get; private set; } = null;
-    public Guid Id { get; private set; }
-
     public Admin(
         Guid userId,
         Guid? subscriptionId = null,
@@ -17,7 +13,12 @@ public class Admin {
         Id = id ?? Guid.NewGuid();
     }
 
-    private Admin() { }
+    private Admin() {
+    }
+
+    public Guid UserId { get; }
+    public Guid? SubscriptionId { get; private set; }
+    public Guid Id { get; private set; }
 
     public void SetSubscription(Subscription subscription) {
         SubscriptionId.HasValue.Throw().IfTrue();

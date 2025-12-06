@@ -5,45 +5,39 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GymManagement.Infrastructure.Subscriptions.Persistence;
 
-public class SubscriptionsRepository : ISubscriptionsRepository {
-    private readonly GymManagementDbContext _dbContext;
-
-    public SubscriptionsRepository(GymManagementDbContext dbContext) {
-        _dbContext = dbContext;
-    }
-
+public class SubscriptionsRepository(GymManagementDbContext db) : ISubscriptionsRepository {
     public async Task AddSubscriptionAsync(Subscription subscription) {
-        await _dbContext.Subscriptions.AddAsync(subscription);
+        await db.Subscriptions.AddAsync(subscription);
     }
 
     public async Task<bool> ExistsAsync(Guid id) {
-        return await _dbContext.Subscriptions
+        return await db.Subscriptions
             .AsNoTracking()
             .AnyAsync(subscription => subscription.Id == id);
     }
 
     public async Task<Subscription?> GetByAdminIdAsync(Guid adminId) {
-        return await _dbContext.Subscriptions
+        return await db.Subscriptions
             .AsNoTracking()
             .FirstOrDefaultAsync(subscription => subscription.AdminId == adminId);
     }
 
     public async Task<Subscription?> GetByIdAsync(Guid id) {
-        return await _dbContext.Subscriptions.FirstOrDefaultAsync(subscription => subscription.Id == id);
+        return await db.Subscriptions.FirstOrDefaultAsync(subscription => subscription.Id == id);
     }
 
     public async Task<List<Subscription>> ListAsync() {
-        return await _dbContext.Subscriptions.ToListAsync();
+        return await db.Subscriptions.ToListAsync();
     }
 
     public Task RemoveSubscriptionAsync(Subscription subscription) {
-        _dbContext.Remove(subscription);
+        db.Remove(subscription);
 
         return Task.CompletedTask;
     }
 
     public Task UpdateAsync(Subscription subscription) {
-        _dbContext.Update(subscription);
+        db.Update(subscription);
 
         return Task.CompletedTask;
     }

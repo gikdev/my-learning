@@ -9,28 +9,21 @@ using DomainSubscriptionType = GymManagement.Domain.Subscriptions.SubscriptionTy
 namespace GymManagement.Api.Controllers;
 
 [Route("[controller]")]
-public class SubscriptionsController : ApiController {
-    private readonly ISender _mediator;
-
-    public SubscriptionsController(ISender mediator) {
-        _mediator = mediator;
-    }
-
+public class SubscriptionsController(ISender mediator) : ApiController {
     [HttpPost]
     public async Task<IActionResult> CreateSubscription(CreateSubscriptionRequest request) {
         if (!DomainSubscriptionType.TryFromName(
-            request.SubscriptionType.ToString(),
-            out var subscriptionType)) {
+                request.SubscriptionType.ToString(),
+                out var subscriptionType))
             return Problem(
                 statusCode: StatusCodes.Status400BadRequest,
                 detail: "Invalid subscription type");
-        }
 
         var command = new CreateSubscriptionCommand(
             subscriptionType,
             request.AdminId);
 
-        var createSubscriptionResult = await _mediator.Send(command);
+        var createSubscriptionResult = await mediator.Send(command);
 
         return createSubscriptionResult.Match(
             subscription => CreatedAtAction(
@@ -46,7 +39,7 @@ public class SubscriptionsController : ApiController {
     public async Task<IActionResult> GetSubscription(Guid subscriptionId) {
         var query = new GetSubscriptionQuery(subscriptionId);
 
-        var getSubscriptionsResult = await _mediator.Send(query);
+        var getSubscriptionsResult = await mediator.Send(query);
 
         return getSubscriptionsResult.Match(
             subscription => Ok(new SubscriptionResponse(
@@ -59,7 +52,7 @@ public class SubscriptionsController : ApiController {
     public async Task<IActionResult> DeleteSubscription(Guid subscriptionId) {
         var command = new DeleteSubscriptionCommand(subscriptionId);
 
-        var createSubscriptionResult = await _mediator.Send(command);
+        var createSubscriptionResult = await mediator.Send(command);
 
         return createSubscriptionResult.Match(
             _ => NoContent(),
@@ -71,7 +64,7 @@ public class SubscriptionsController : ApiController {
             nameof(DomainSubscriptionType.Free) => SubscriptionType.Free,
             nameof(DomainSubscriptionType.Starter) => SubscriptionType.Starter,
             nameof(DomainSubscriptionType.Pro) => SubscriptionType.Pro,
-            _ => throw new InvalidOperationException(),
+            _ => throw new InvalidOperationException()
         };
     }
 }
