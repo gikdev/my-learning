@@ -7,7 +7,6 @@ using App.Categories.Queries.GetCategory;
 using App.Categories.Queries.ListCategories;
 using Contracts.Categories;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -15,12 +14,13 @@ namespace Api.Controllers;
 public class CategoriesController(ISender mediator) : ApiController {
     [EndpointSummary("Create a new category")]
     [HttpPost(ApiEndpoints.Categories.Create)]
-    public async Task<IActionResult> CreateCategory(CreateCategoryRequest request) {
+    [ProducesResponseType(typeof(CategoryResponse), StatusCodes.Status201Created)]
+    public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequest request) {
         var command = new CreateCategoryCommand(request.Title);
 
-        var createCategoryResult = await mediator.Send(command);
+        var result = await mediator.Send(command);
 
-        return createCategoryResult.Match(
+        return result.Match(
             category => CreatedAtAction(
                 nameof(GetCategory),
                 new { id = category.Id },
@@ -33,7 +33,8 @@ public class CategoriesController(ISender mediator) : ApiController {
 
     [EndpointSummary("Delete a category by ID")]
     [HttpDelete(ApiEndpoints.Categories.Delete)]
-    public async Task<IActionResult> DeleteCategory(Guid id) {
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> DeleteCategory([FromRoute] Guid id) {
         var command = new DeleteCategoryCommand(id);
 
         var deleteCategoryResult = await mediator.Send(command);
@@ -45,6 +46,7 @@ public class CategoriesController(ISender mediator) : ApiController {
 
     [EndpointSummary("Get all categories")]
     [HttpGet(ApiEndpoints.Categories.List)]
+    [ProducesResponseType(typeof(IEnumerable<CategoryResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ListCategories() {
         var query = new ListCategoriesQuery();
 
@@ -60,7 +62,9 @@ public class CategoriesController(ISender mediator) : ApiController {
 
     [EndpointSummary("Get a category by ID")]
     [HttpGet(ApiEndpoints.Categories.GetById)]
-    public async Task<IActionResult> GetCategory(Guid id) {
+    [ProducesResponseType(typeof(CategoryResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCategory([FromRoute] Guid id) {
         var query = new GetCategoryQuery(id);
 
         var getCategoryResult = await mediator.Send(query);
@@ -75,7 +79,8 @@ public class CategoriesController(ISender mediator) : ApiController {
 
     [EndpointSummary("Rename a category")]
     [HttpPatch(ApiEndpoints.Categories.Rename)]
-    public async Task<IActionResult> RenameCategory(Guid id, RenameCategoryRequest request) {
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> RenameCategory([FromRoute] Guid id, [FromBody] RenameCategoryRequest request) {
         var command = new RenameCategoryCommand(id, request.NewTitle);
 
         var renameCategoryResult = await mediator.Send(command);
@@ -87,7 +92,8 @@ public class CategoriesController(ISender mediator) : ApiController {
 
     [EndpointSummary("Add a todo to a category")]
     [HttpPost(ApiEndpoints.Categories.AddTodo)]
-    public async Task<IActionResult> AddTodo(Guid categoryId, Guid todoId) {
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> AddTodo([FromRoute] Guid categoryId, [FromRoute] Guid todoId) {
         var command = new AddTodoToCategoryCommand(categoryId, todoId);
 
         var addTodoResult = await mediator.Send(command);
@@ -99,7 +105,8 @@ public class CategoriesController(ISender mediator) : ApiController {
 
     [EndpointSummary("Remove a todo from a category")]
     [HttpDelete(ApiEndpoints.Categories.RemoveTodo)]
-    public async Task<IActionResult> RemoveTodo(Guid categoryId, Guid todoId) {
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> RemoveTodo([FromRoute] Guid categoryId, [FromRoute] Guid todoId) {
         var command = new RemoveTodoFromCategoryCommand(categoryId, todoId);
 
         var removeTodoResult = await mediator.Send(command);

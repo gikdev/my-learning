@@ -8,6 +8,6 @@ public static class ToResponse {
         Id = todo.Id,
         Title = todo.Title,
         Importance = todo.Importance.ToNativeEnum(),
-        IsCompleted = false,
+        IsCompleted = todo.IsCompleted,
     };
 }

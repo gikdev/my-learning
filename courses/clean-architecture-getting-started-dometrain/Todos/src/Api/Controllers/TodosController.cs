@@ -16,7 +16,8 @@ namespace Api.Controllers;
 public class TodosController(ISender mediator) : ApiController {
     [EndpointSummary("Create a new todo")]
     [HttpPost(ApiEndpoints.Todos.Create)]
-    public async Task<IActionResult> CreateTodo(CreateTodoRequest request) {
+    [ProducesResponseType(typeof(TodoResponse), StatusCodes.Status201Created)]
+    public async Task<IActionResult> CreateTodo([FromBody] CreateTodoRequest request) {
         var wasOk = DomainTodoImportance.TryFromName(
             request.Importance.ToString(),
             out var importance
@@ -43,7 +44,8 @@ public class TodosController(ISender mediator) : ApiController {
 
     [EndpointSummary("Delete a todo by ID")]
     [HttpDelete(ApiEndpoints.Todos.Delete)]
-    public async Task<IActionResult> DeleteTodo(Guid id) {
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> DeleteTodo([FromRoute] Guid id) {
         var command = new DeleteTodoCommand(id);
 
         var deleteTodoResult = await mediator.Send(command);
@@ -56,6 +58,7 @@ public class TodosController(ISender mediator) : ApiController {
 
     [EndpointSummary("Get all todos with optional filtering")]
     [HttpGet(ApiEndpoints.Todos.List)]
+    [ProducesResponseType(typeof(IEnumerable<TodoResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ListTodos(
         [FromQuery] ListTodosRequest request
     ) {
@@ -71,6 +74,8 @@ public class TodosController(ISender mediator) : ApiController {
 
     [EndpointSummary("Get a todo by ID")]
     [HttpGet(ApiEndpoints.Todos.GetById)]
+    [ProducesResponseType(typeof(TodoResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetTodo([FromRoute] Guid id) {
         var query = new GetTodoQuery(id);
 
@@ -84,6 +89,7 @@ public class TodosController(ISender mediator) : ApiController {
 
     [EndpointSummary("Rename a todo")]
     [HttpPatch(ApiEndpoints.Todos.Rename)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> RenameTodo([FromBody] RenameTodoRequest request, [FromRoute] Guid id) {
         var command = new RenameTodoCommand(id, request.NewTitle);
 
@@ -97,6 +103,7 @@ public class TodosController(ISender mediator) : ApiController {
 
     [EndpointSummary("Change the importance level of a todo")]
     [HttpPatch(ApiEndpoints.Todos.ChangeImportance)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> ChangeTodoImportance(
         [FromBody] ChangeTodoImportanceRequest request,
         [FromRoute] Guid id
@@ -113,6 +120,7 @@ public class TodosController(ISender mediator) : ApiController {
 
     [EndpointSummary("Toggle the completed status of a todo")]
     [HttpPatch(ApiEndpoints.Todos.ToggleCompleted)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> ToggleTodoCompleted(
         [FromRoute] Guid id
     ) {

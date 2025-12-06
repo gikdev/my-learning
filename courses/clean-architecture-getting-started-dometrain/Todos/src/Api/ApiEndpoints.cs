@@ -8,8 +8,8 @@ public static class ApiEndpoints {
 
         public const string Create = $"{Base}";
         public const string List = $"{Base}";
-        public const string Delete = $"{Base}";
 
+        public const string Delete = $"{Base}/{{id:guid}}";
         public const string GetById = $"{Base}/{{id:guid}}";
 
         public const string Rename = $"{Base}/{{id:guid}}/title";
@@ -23,8 +23,8 @@ public static class ApiEndpoints {
 
         public const string Create = $"{Base}";
         public const string List = $"{Base}";
-        public const string Delete = $"{Base}";
 
+        public const string Delete = $"{Base}/{{id:guid}}";
         public const string GetById = $"{Base}/{{id:guid}}";
 
         public const string Rename = $"{Base}/{{id:guid}}/title";
