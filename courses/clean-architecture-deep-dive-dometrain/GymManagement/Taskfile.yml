@@ -1,0 +1,13 @@
+version: '3'
+
+tasks:
+  run:
+    desc: Run the API project.
+    aliases: [default]
+    cmds:
+      - dotnet run --project src/GymManagement.Api
+
+  dev:
+    desc: Start development on the API project.
+    cmds:
+      - dotnet watch run --project src/GymManagement.Api

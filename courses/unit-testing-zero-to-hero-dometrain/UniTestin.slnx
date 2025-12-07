@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/1.Fundamentals/" />
+  <Folder Name="/1.Fundamentals/src/">
+    <Project Path="1.Fundamentals\src\CalculatorLibrary\CalculatorLibrary.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/1.Fundamentals/test/">
+    <Project Path="1.Fundamentals\test\CalculatorLibrary.Tests.Unit\CalculatorLibrary.Tests.Unit.csproj" Type="Classic C#" />
+  </Folder>
+</Solution>
