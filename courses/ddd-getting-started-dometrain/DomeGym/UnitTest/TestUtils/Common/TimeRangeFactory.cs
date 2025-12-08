@@ -1,4 +1,4 @@
-using Domain;
+using Domain.Common.ValueObjects;
 using Throw;
 
 namespace UnitTest.TestUtils.Common;

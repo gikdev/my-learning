@@ -2,7 +2,7 @@ using UnitTest.TestUtils.Common;
 using UnitTest.TestUtils.Sessions;
 using UnitTest.TestUtils.Trainers;
 using FluentAssertions;
-using Domain;
+using Domain.TrainerAggregate;
 
 namespace UnitTest;
 

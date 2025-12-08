@@ -1,4 +1,4 @@
-using Domain;
+using Domain.Common.ValueObjects;
 
 namespace UnitTest.TestConstants;
 

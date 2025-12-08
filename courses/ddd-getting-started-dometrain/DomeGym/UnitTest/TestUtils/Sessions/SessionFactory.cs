@@ -1,5 +1,5 @@
-using Domain;
-using UnitTest.TestConstants;
+using Domain.Common.ValueObjects;
+using Domain.SessionAggregate;
 
 namespace UnitTest.TestUtils.Sessions;
 

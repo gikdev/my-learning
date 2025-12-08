@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace Domain;
+namespace Domain.SubscriptionAggregate;
 
 public static class SubscriptionErrors {
     public static readonly Error CannotHaveMoreGymsThanSubscriptionAllows = Error.Validation(

@@ -1,7 +1,7 @@
 using UnitTest.TestUtils.Gyms;
 using UnitTest.TestUtils.Subscriptions;
 using FluentAssertions;
-using Domain;
+using Domain.SubscriptionAggregate;
 
 namespace UnitTest;
 

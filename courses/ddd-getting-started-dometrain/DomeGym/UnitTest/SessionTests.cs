@@ -2,7 +2,7 @@ using UnitTest.TestUtils.Participants;
 using UnitTest.TestUtils.Services;
 using UnitTest.TestUtils.Sessions;
 using FluentAssertions;
-using Domain;
+using Domain.SessionAggregate;
 
 namespace UnitTest;
 

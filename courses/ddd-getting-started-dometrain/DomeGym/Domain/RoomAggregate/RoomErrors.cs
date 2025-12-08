@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace Domain;
+namespace Domain.RoomAggregate;
 
 public static class RoomErrors {
     public static readonly Error CannotHaveMoreSessionThanSubscriptionAllows = Error.Validation(

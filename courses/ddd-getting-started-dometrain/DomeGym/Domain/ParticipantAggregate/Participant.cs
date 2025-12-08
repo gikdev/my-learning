@@ -1,18 +1,18 @@
+using Domain.Common;
+using Domain.Common.Entities;
+using Domain.SessionAggregate;
 using ErrorOr;
 
-namespace Domain;
+namespace Domain.ParticipantAggregate;
 
-public class Participant {
+public class Participant : AggregateRoot {
     private readonly Schedule _schedule = Schedule.Empty();
 
     private readonly Guid _userId;
     private readonly List<Guid> _sessionIds = [];
 
-    public Guid Id { get; }
-
-    public Participant(Guid userId, Guid? id = null) {
+    public Participant(Guid userId, Guid? id = null) : base(id ?? Guid.NewGuid()) {
         _userId = userId;
-        Id = id ?? Guid.NewGuid();
     }
 
     public ErrorOr<Success> AddToSchedule(Session session) {

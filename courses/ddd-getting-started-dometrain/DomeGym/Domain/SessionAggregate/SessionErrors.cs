@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace Domain;
+namespace Domain.SessionAggregate;
 
 public static class SessionErrors {
     public readonly static Error CannotHaveMoreReservationsThanParticipants = Error.Validation(

@@ -1,5 +1,4 @@
-using Domain;
-using UnitTest.TestConstants;
+using Domain.TrainerAggregate;
 
 namespace UnitTest.TestUtils.Trainers;
 

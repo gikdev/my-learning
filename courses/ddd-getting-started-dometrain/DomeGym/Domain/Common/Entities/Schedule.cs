@@ -1,17 +1,16 @@
+using Domain.Common.ValueObjects;
 using ErrorOr;
 
-namespace Domain;
+namespace Domain.Common.Entities;
 
-public class Schedule {
+public class Schedule : Entity {
     private readonly Dictionary<DateOnly, List<TimeRange>> _calendar = new();
-    private readonly Guid _id;
 
     public Schedule(
         Dictionary<DateOnly, List<TimeRange>>? calendar = null,
         Guid? id = null
-    ) {
-        _calendar = calendar ?? new();
-        _id = id ?? Guid.NewGuid();
+    ) : base(id ?? Guid.NewGuid()) {
+        _calendar = calendar ?? [];
     }
 
     public static Schedule Empty() {
@@ -47,6 +46,4 @@ public class Schedule {
 
         return Result.Success;
     }
-
-    private Schedule() { }
 }

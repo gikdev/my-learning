@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace Domain;
+namespace Domain.ParticipantAggregate;
 
 public static class ParticipantErrors {
     public static readonly Error CannotHaveTwoOrMoreOverlappingSessions = Error.Validation(

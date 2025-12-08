@@ -1,5 +1,4 @@
-using Domain;
-using UnitTest.TestConstants;
+using Domain.ParticipantAggregate;
 
 namespace UnitTest.TestUtils.Participants;
 

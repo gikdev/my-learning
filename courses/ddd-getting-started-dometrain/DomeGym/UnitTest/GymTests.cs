@@ -1,7 +1,7 @@
 using UnitTest.TestUtils.Gyms;
 using UnitTest.TestUtils.Rooms;
 using FluentAssertions;
-using Domain;
+using Domain.GymAggregate;
 
 namespace UnitTest;
 

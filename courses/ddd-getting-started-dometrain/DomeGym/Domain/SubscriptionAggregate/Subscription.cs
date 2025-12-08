@@ -1,8 +1,10 @@
+using Domain.Common;
+using Domain.GymAggregate;
 using ErrorOr;
 
-namespace Domain;
+namespace Domain.SubscriptionAggregate;
 
-public class Subscription {
+public class Subscription : AggregateRoot {
     private readonly Guid _id;
     private readonly List<Guid> _gymIds = [];
     private readonly SubscriptionType _subscriptionType;
@@ -13,11 +15,10 @@ public class Subscription {
         SubscriptionType subscriptionType,
         Guid adminId,
         Guid? id = null
-    ) {
+    ) : base(id ?? Guid.NewGuid()) {
         _subscriptionType = subscriptionType;
         _maxGyms = GetMaxGyms();
         _adminId = adminId;
-        _id = id ?? Guid.NewGuid();
     }
 
     public int GetMaxGyms() => _subscriptionType.Name switch {

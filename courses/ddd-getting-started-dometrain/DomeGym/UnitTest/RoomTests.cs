@@ -2,7 +2,7 @@ using UnitTest.TestUtils.Common;
 using UnitTest.TestUtils.Rooms;
 using UnitTest.TestUtils.Sessions;
 using FluentAssertions;
-using Domain;
+using Domain.RoomAggregate;
 
 namespace UnitTest;
 

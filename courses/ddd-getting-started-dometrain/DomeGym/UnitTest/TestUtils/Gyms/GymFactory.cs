@@ -1,5 +1,4 @@
-using Domain;
-using UnitTest.TestConstants;
+using Domain.GymAggregate;
 
 namespace UnitTest.TestUtils.Gyms;
 
