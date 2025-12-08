@@ -1,5 +1,12 @@
 <Solution>
-    <Project Path="DomeGym.Application/DomeGym.Application.csproj"/>
-    <Project Path="DomeGym.Domain/DomeGym.Domain.csproj"/>
-    <Project Path="DomeGym.Domain.UnitTests/DomeGym.Domain.UnitTests.csproj"/>
+    <Folder Name="/src/">
+        <Project Path="src/DomeGym.Api/DomeGym.Api.csproj"/>
+        <Project Path="src/DomeGym.Application/DomeGym.Application.csproj"/>
+        <Project Path="src/DomeGym.Contracts/DomeGym.Contracts.csproj"/>
+        <Project Path="src/DomeGym.Domain/DomeGym.Domain.csproj"/>
+        <Project Path="src/DomeGym.Infrastructure/DomeGym.Infrastructure.csproj"/>
+    </Folder>
+    <Folder Name="/tests/">
+        <Project Path="tests/DomeGym.Domain.UnitTests/DomeGym.Domain.UnitTests.csproj"/>
+    </Folder>
 </Solution>
