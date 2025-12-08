@@ -22,7 +22,7 @@ TaskForge allows organizing, prioritizing, and tracking tasks. Users can group t
 * Represents a single piece of work.
 * Each task has a **title** (required) and **description** (optional).
 * Tasks belong to a project.
-* Tasks have a **status**: pending or completed.
+* Tasks have a **status**: pending, waiting or completed.
 * Tasks can optionally have a **priority**: low, medium, high.
 * Tasks can optionally have **labels**.
 
@@ -31,8 +31,9 @@ TaskForge allows organizing, prioritizing, and tracking tasks. Users can group t
 ### Label
 
 * Represents a category or tag.
-* Labels have a **unique name** within a project.
+* Labels have a **unique name**.
 * Tasks can have multiple labels.
+* Labels do not belong to a specific project.
 
 ---
 
@@ -47,7 +48,7 @@ TaskForge allows organizing, prioritizing, and tracking tasks. Users can group t
 
 2. **Status Rules**
 
-   * Tasks can only have two statuses: pending or completed.
+   * Tasks can only have 3 statuses: pending, waiting or completed.
    * Completed tasks can be marked pending again if needed.
 
 3. **Projects**
