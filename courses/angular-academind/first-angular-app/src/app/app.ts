@@ -1,13 +1,12 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { Header } from './header/header';
 import { User } from './user/user';
-import { DUMMY_USERS, DummyUser } from './dummy-users';
+import { DUMMY_USERS } from './dummy-users';
 import { Tasks } from './tasks/tasks';
-import { NgForOf } from "../../node_modules/@angular/common/types/_common_module-chunk";
 
 @Component({
   selector: 'app-root',
-  imports: [Header, User, Tasks, NgForOf],
+  imports: [Header, User, Tasks],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
