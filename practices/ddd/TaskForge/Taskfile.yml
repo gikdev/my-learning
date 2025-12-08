@@ -1,0 +1,24 @@
+# https://taskfile.dev
+version: '3'
+
+tasks:
+  dev:
+    desc: Start development.
+    aliases: [ default ]
+    cmds:
+      - dotnet watch run --project src/TaskForge.Api/
+
+  run:
+    desc: Run the project.
+    cmds:
+      - dotnet run --project src/TaskForge.Api/
+
+  restore:
+    desc: Install dependencies (mostly used after cloning/pulling).
+    cmds:
+      - dotnet restore TaskForge.slnx
+
+  # test:
+  #   desc: Run tests.
+  #   cmds:
+  #     - dotnet test
