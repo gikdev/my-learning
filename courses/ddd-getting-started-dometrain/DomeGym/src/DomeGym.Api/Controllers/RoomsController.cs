@@ -9,13 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace DomeGym.Api.Controllers;
 
 [Route("gyms/{gymId:guid}/rooms")]
-public class RoomsController : ApiController {
-    private readonly ISender _sender;
-
-    public RoomsController(ISender sender) {
-        _sender = sender;
-    }
-
+public class RoomsController(ISender sender) : ApiController {
+    [EndpointSummary("Create a new room within the specified gym.")]
     [HttpPost]
     public async Task<IActionResult> CreateRoom(
         CreateRoomRequest request,
@@ -24,7 +19,7 @@ public class RoomsController : ApiController {
             gymId,
             request.Name);
 
-        var createRoomResult = await _sender.Send(command);
+        var createRoomResult = await sender.Send(command);
 
         return createRoomResult.Match(
             room => CreatedAtAction(
@@ -34,35 +29,38 @@ public class RoomsController : ApiController {
             Problem);
     }
 
+    [EndpointSummary("Delete a room from a gym.")]
     [HttpDelete("{roomId:guid}")]
     public async Task<IActionResult> DeleteRoom(
         Guid gymId,
         Guid roomId) {
         var command = new DeleteRoomCommand(gymId, roomId);
 
-        var deleteRoomResult = await _sender.Send(command);
+        var deleteRoomResult = await sender.Send(command);
 
         return deleteRoomResult.Match(_ => NoContent(), Problem);
     }
 
+    [EndpointSummary("Get details for a room in a gym.")]
     [HttpGet("{roomId:guid}")]
     public async Task<IActionResult> GetRoom(
         Guid gymId,
         Guid roomId) {
         var query = new GetRoomQuery(gymId, roomId);
 
-        var getRoomResult = await _sender.Send(query);
+        var getRoomResult = await sender.Send(query);
 
         return getRoomResult.Match(
             room => Ok(new RoomResponse(room.Id, room.Name)),
             Problem);
     }
 
+    [EndpointSummary("List all rooms belonging to a gym.")]
     [HttpGet]
     public async Task<IActionResult> ListRooms(Guid gymId) {
         var query = new ListRoomsQuery(gymId);
 
-        var listRoomsResult = await _sender.Send(query);
+        var listRoomsResult = await sender.Send(query);
 
         return listRoomsResult.Match(
             rooms => Ok(rooms.ConvertAll(room => new RoomResponse(room.Id, room.Name))),

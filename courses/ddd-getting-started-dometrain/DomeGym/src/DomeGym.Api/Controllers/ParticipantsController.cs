@@ -8,13 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace DomeGym.Api.Controllers;
 
 [Route("participants")]
-public class ParticipantsController : ApiController {
-    private readonly ISender _sender;
-
-    public ParticipantsController(ISender sender) {
-        _sender = sender;
-    }
-
+public class ParticipantsController(ISender sender) : ApiController {
+    [EndpointSummary("List sessions for a participant with optional dates.")]
     [HttpGet("{participantId:guid}/sessions")]
     public async Task<IActionResult> ListParticipantSessions(
         Guid participantId,
@@ -25,7 +20,7 @@ public class ParticipantsController : ApiController {
             startDateTime,
             endDateTime);
 
-        var listParticipantSessionsResult = await _sender.Send(query);
+        var listParticipantSessionsResult = await sender.Send(query);
 
         return listParticipantSessionsResult.Match(
             sessions => Ok(sessions.ConvertAll(session => new SessionResponse(
@@ -40,26 +35,28 @@ public class ParticipantsController : ApiController {
             Problem);
     }
 
+    [EndpointSummary("Cancel a participant's reservation for a session.")]
     [HttpDelete("{participantId:guid}/sessions/{sessionId:guid}/reservation")]
     public async Task<IActionResult> CancelReservation(
         Guid participantId,
         Guid sessionId) {
         var command = new CancelReservationCommand(participantId, sessionId);
 
-        var cancelReservationResult = await _sender.Send(command);
+        var cancelReservationResult = await sender.Send(command);
 
         return cancelReservationResult.Match(
             _ => NoContent(),
             Problem);
     }
 
+    [EndpointSummary("Create a reservation for a participant and session.")]
     [HttpPost("{participantId:guid}/sessions/{sessionId:guid}/reservation")]
     public async Task<IActionResult> CreateReservation(
         Guid participantId,
         Guid sessionId) {
         var command = new CreateReservationCommand(sessionId, participantId);
 
-        var cancelReservationResult = await _sender.Send(command);
+        var cancelReservationResult = await sender.Send(command);
 
         return cancelReservationResult.Match(
             _ => NoContent(),

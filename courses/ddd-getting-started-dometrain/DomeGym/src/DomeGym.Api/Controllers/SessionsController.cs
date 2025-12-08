@@ -8,13 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace DomeGym.Api.Controllers;
 
 [Route("rooms/{roomId:guid}/sessions")]
-public class SessionsController : ApiController {
-    private readonly ISender _sender;
-
-    public SessionsController(ISender sender) {
-        _sender = sender;
-    }
-
+public class SessionsController(ISender sender) : ApiController {
+    [EndpointSummary("Create a session within a room.")]
     [HttpPost]
     public async Task<IActionResult> CreateSession(
         CreateSessionRequest request,
@@ -33,7 +28,7 @@ public class SessionsController : ApiController {
             request.TrainerId,
             categoriesToDomainResult.Value);
 
-        var createSessionResult = await _sender.Send(command);
+        var createSessionResult = await sender.Send(command);
 
         return createSessionResult.Match(
             session => CreatedAtAction(
@@ -51,6 +46,7 @@ public class SessionsController : ApiController {
             Problem);
     }
 
+    [EndpointSummary("Get details for a session in a room.")]
     [HttpGet("{sessionId:guid}")]
     public async Task<IActionResult> GetSession(
         Guid roomId,
@@ -59,7 +55,7 @@ public class SessionsController : ApiController {
             roomId,
             sessionId);
 
-        var getSessionResult = await _sender.Send(query);
+        var getSessionResult = await sender.Send(query);
 
         return getSessionResult.Match(
             session => Ok(new SessionResponse(

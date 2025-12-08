@@ -6,13 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace DomeGym.Api.Controllers;
 
 [Route("sessions/{sessionId:guid}/reservations")]
-public class ReservationsController : ApiController {
-    private readonly ISender _sender;
-
-    public ReservationsController(ISender sender) {
-        _sender = sender;
-    }
-
+public class ReservationsController(ISender sender) : ApiController {
+    [EndpointSummary("Create a reservation for a session.")]
     [HttpPost]
     public async Task<IActionResult> CreateReservation(
         CreateReservationRequest request,
@@ -21,7 +16,7 @@ public class ReservationsController : ApiController {
             sessionId,
             request.ParticipantId);
 
-        var createReservationResult = await _sender.Send(command);
+        var createReservationResult = await sender.Send(command);
 
         return createReservationResult.Match(_ => NoContent(), Problem);
     }

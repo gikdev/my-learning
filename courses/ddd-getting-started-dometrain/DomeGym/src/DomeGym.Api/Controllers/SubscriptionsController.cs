@@ -7,13 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace DomeGym.Api.Controllers;
 
 [Route("subscriptions")]
-public class SubscriptionsController : ApiController {
-    private readonly ISender _sender;
-
-    public SubscriptionsController(ISender sender) {
-        _sender = sender;
-    }
-
+public class SubscriptionsController(ISender sender) : ApiController {
+    [EndpointSummary("Create a subscription for an admin.")]
     [HttpPost]
     public async Task<IActionResult> CreateSubscription(CreateSubscriptionRequest request) {
         if (!Domain.SubscriptionAggregate.SubscriptionType.TryFromName(
@@ -23,7 +18,7 @@ public class SubscriptionsController : ApiController {
 
         var command = new CreateSubscriptionCommand(subscriptionType, request.AdminId);
 
-        var createSubscriptionResult = await _sender.Send(command);
+        var createSubscriptionResult = await sender.Send(command);
 
         return createSubscriptionResult.Match(
             subscription => Ok(new SubscriptionResponse(
@@ -32,12 +27,13 @@ public class SubscriptionsController : ApiController {
             Problem);
     }
 
+    [EndpointSummary("List subscriptions (temporary all tenants).")]
     [HttpGet]
     public async Task<IActionResult> ListSubscriptions() {
         // TODO: get user/admin id from token, for now, return all
         var query = new ListSubscriptionsQuery();
 
-        var listSubscriptionsResult = await _sender.Send(query);
+        var listSubscriptionsResult = await sender.Send(query);
 
         return listSubscriptionsResult.Match(
             subscriptions => Ok(subscriptions.ConvertAll(subscription => new SubscriptionResponse(

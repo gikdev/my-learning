@@ -8,13 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace DomeGym.Api.Controllers;
 
 [Route("users/{userId:guid}/profiles")]
-public class ProfilesController : ApiController {
-    private readonly ISender _sender;
-
-    public ProfilesController(ISender sender) {
-        _sender = sender;
-    }
-
+public class ProfilesController(ISender sender) : ApiController {
+    [EndpointSummary("Create a profile for a user.")]
     [HttpPost]
     public async Task<IActionResult> CreateProfile(CreateProfileRequest request, Guid userId) {
         if (!Domain.Profiles.ProfileType.TryFromName(request.ProfileType.ToString(), out var profileType))
@@ -22,7 +17,7 @@ public class ProfilesController : ApiController {
 
         var command = new CreateProfileCommand(profileType, userId);
 
-        var createProfileResult = await _sender.Send(command);
+        var createProfileResult = await sender.Send(command);
 
         return createProfileResult.Match(
             id => CreatedAtAction(
@@ -32,11 +27,12 @@ public class ProfilesController : ApiController {
             Problem);
     }
 
+    [EndpointSummary("List profiles for a user.")]
     [HttpGet]
     public async Task<IActionResult> ListProfiles(Guid userId) {
         var listProfilesQuery = new ListProfilesQuery(userId);
 
-        var listProfilesResult = await _sender.Send(listProfilesQuery);
+        var listProfilesResult = await sender.Send(listProfilesQuery);
 
         return listProfilesResult.Match(
             profiles => Ok(profiles.ConvertAll(profile => new ProfileResponse(
@@ -45,6 +41,7 @@ public class ProfilesController : ApiController {
             Problem);
     }
 
+    [EndpointSummary("Get a specific profile for a user.")]
     [HttpGet("{profileTypeString}")]
     public async Task<IActionResult> GetProfile(Guid userId, string profileTypeString) {
         if (!Domain.Profiles.ProfileType.TryFromName(profileTypeString, out var profileType))
@@ -52,7 +49,7 @@ public class ProfilesController : ApiController {
 
         var query = new GetProfileQuery(userId, profileType);
 
-        var getProfileResult = await _sender.Send(query);
+        var getProfileResult = await sender.Send(query);
 
         return getProfileResult.Match(
             profile => profile is null
