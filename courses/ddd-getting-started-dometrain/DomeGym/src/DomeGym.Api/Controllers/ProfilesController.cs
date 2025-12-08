@@ -11,7 +11,7 @@ namespace DomeGym.Api.Controllers;
 public class ProfilesController(ISender sender) : ApiController {
     [EndpointSummary("Create a profile for a user.")]
     [HttpPost]
-    public async Task<IActionResult> CreateProfile(CreateProfileRequest request, Guid userId) {
+    public async Task<IActionResult> CreateProfileAsync(CreateProfileRequest request, Guid userId) {
         if (!Domain.Profiles.ProfileType.TryFromName(request.ProfileType.ToString(), out var profileType))
             return Problem("Invalid profile type", statusCode: StatusCodes.Status400BadRequest);
 
@@ -21,7 +21,7 @@ public class ProfilesController(ISender sender) : ApiController {
 
         return createProfileResult.Match(
             id => CreatedAtAction(
-                nameof(GetProfile),
+                nameof(GetProfileAsync),
                 new { userId, profileTypeString = request.ProfileType.ToString() },
                 new ProfileResponse(id, request.ProfileType)),
             Problem);
@@ -29,7 +29,7 @@ public class ProfilesController(ISender sender) : ApiController {
 
     [EndpointSummary("List profiles for a user.")]
     [HttpGet]
-    public async Task<IActionResult> ListProfiles(Guid userId) {
+    public async Task<IActionResult> ListProfilesAsync(Guid userId) {
         var listProfilesQuery = new ListProfilesQuery(userId);
 
         var listProfilesResult = await sender.Send(listProfilesQuery);
@@ -43,7 +43,7 @@ public class ProfilesController(ISender sender) : ApiController {
 
     [EndpointSummary("Get a specific profile for a user.")]
     [HttpGet("{profileTypeString}")]
-    public async Task<IActionResult> GetProfile(Guid userId, string profileTypeString) {
+    public async Task<IActionResult> GetProfileAsync(Guid userId, string profileTypeString) {
         if (!Domain.Profiles.ProfileType.TryFromName(profileTypeString, out var profileType))
             return Problem("Invalid profile type", statusCode: StatusCodes.Status400BadRequest);
 

@@ -9,7 +9,7 @@ namespace DomeGym.Api.Controllers;
 public class ReservationsController(ISender sender) : ApiController {
     [EndpointSummary("Create a reservation for a session.")]
     [HttpPost]
-    public async Task<IActionResult> CreateReservation(
+    public async Task<IActionResult> CreateReservationAsync(
         CreateReservationRequest request,
         Guid sessionId) {
         var command = new CreateReservationCommand(

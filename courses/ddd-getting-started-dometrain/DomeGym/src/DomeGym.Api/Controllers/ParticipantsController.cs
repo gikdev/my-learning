@@ -11,7 +11,7 @@ namespace DomeGym.Api.Controllers;
 public class ParticipantsController(ISender sender) : ApiController {
     [EndpointSummary("List sessions for a participant with optional dates.")]
     [HttpGet("{participantId:guid}/sessions")]
-    public async Task<IActionResult> ListParticipantSessions(
+    public async Task<IActionResult> ListParticipantSessionsAsync(
         Guid participantId,
         DateTime? startDateTime = null,
         DateTime? endDateTime = null) {
@@ -37,7 +37,7 @@ public class ParticipantsController(ISender sender) : ApiController {
 
     [EndpointSummary("Cancel a participant's reservation for a session.")]
     [HttpDelete("{participantId:guid}/sessions/{sessionId:guid}/reservation")]
-    public async Task<IActionResult> CancelReservation(
+    public async Task<IActionResult> CancelReservationAsync(
         Guid participantId,
         Guid sessionId) {
         var command = new CancelReservationCommand(participantId, sessionId);
@@ -51,7 +51,7 @@ public class ParticipantsController(ISender sender) : ApiController {
 
     [EndpointSummary("Create a reservation for a participant and session.")]
     [HttpPost("{participantId:guid}/sessions/{sessionId:guid}/reservation")]
-    public async Task<IActionResult> CreateReservation(
+    public async Task<IActionResult> CreateReservationAsync(
         Guid participantId,
         Guid sessionId) {
         var command = new CreateReservationCommand(sessionId, participantId);

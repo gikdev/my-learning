@@ -10,7 +10,7 @@ namespace DomeGym.Api.Controllers;
 public class SubscriptionsController(ISender sender) : ApiController {
     [EndpointSummary("Create a subscription for an admin.")]
     [HttpPost]
-    public async Task<IActionResult> CreateSubscription(CreateSubscriptionRequest request) {
+    public async Task<IActionResult> CreateSubscriptionAsync(CreateSubscriptionRequest request) {
         if (!Domain.SubscriptionAggregate.SubscriptionType.TryFromName(
                 request.SubscriptionType.ToString(),
                 out var subscriptionType))
@@ -29,7 +29,7 @@ public class SubscriptionsController(ISender sender) : ApiController {
 
     [EndpointSummary("List subscriptions (temporary all tenants).")]
     [HttpGet]
-    public async Task<IActionResult> ListSubscriptions() {
+    public async Task<IActionResult> ListSubscriptionsAsync() {
         // TODO: get user/admin id from token, for now, return all
         var query = new ListSubscriptionsQuery();
 

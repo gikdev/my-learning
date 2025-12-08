@@ -15,14 +15,14 @@ namespace DomeGym.Api.Controllers;
 public class GymsController(ISender sender) : ApiController {
     [EndpointSummary("Create a gym under a subscription.")]
     [HttpPost]
-    public async Task<IActionResult> CreateGym(CreateGymRequest request, Guid subscriptionId) {
+    public async Task<IActionResult> CreateGymAsync(CreateGymRequest request, Guid subscriptionId) {
         var command = new CreateGymCommand(request.Name, subscriptionId);
 
         var createGymResult = await sender.Send(command);
 
         return createGymResult.Match(
             gym => CreatedAtAction(
-                nameof(GetGym),
+                nameof(GetGymAsync),
                 new { subscriptionId, GymId = gym.Id },
                 new GymResponse(gym.Id, gym.Name)),
             Problem);
@@ -30,7 +30,7 @@ public class GymsController(ISender sender) : ApiController {
 
     [EndpointSummary("List gyms for a subscription.")]
     [HttpGet]
-    public async Task<IActionResult> ListGyms(Guid subscriptionId) {
+    public async Task<IActionResult> ListGymsAsync(Guid subscriptionId) {
         var command = new ListGymsQuery(subscriptionId);
 
         var listGymsResult = await sender.Send(command);
@@ -42,7 +42,7 @@ public class GymsController(ISender sender) : ApiController {
 
     [EndpointSummary("Get a gym for a subscription.")]
     [HttpGet("{gymId:guid}")]
-    public async Task<IActionResult> GetGym(Guid subscriptionId, Guid gymId) {
+    public async Task<IActionResult> GetGymAsync(Guid subscriptionId, Guid gymId) {
         var command = new GetGymQuery(subscriptionId, gymId);
 
         var getGymResult = await sender.Send(command);
@@ -54,7 +54,7 @@ public class GymsController(ISender sender) : ApiController {
 
     [EndpointSummary("Add a trainer to a gym.")]
     [HttpPost("{gymId:guid}/trainers")]
-    public async Task<IActionResult> AddTrainer(AddTrainerRequest request, Guid subscriptionId, Guid gymId) {
+    public async Task<IActionResult> AddTrainerAsync(AddTrainerRequest request, Guid subscriptionId, Guid gymId) {
         var command = new AddTrainerCommand(subscriptionId, gymId, request.TrainerId);
 
         var addTrainerResult = await sender.Send(command);
@@ -64,7 +64,7 @@ public class GymsController(ISender sender) : ApiController {
 
     [EndpointSummary("List sessions for a gym with optional filters.")]
     [HttpGet("{gymId:guid}/sessions")]
-    public async Task<IActionResult> ListSessions(
+    public async Task<IActionResult> ListSessionsAsync(
         Guid subscriptionId,
         Guid gymId,
         DateTime? startDateTime = null,

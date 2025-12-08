@@ -12,7 +12,7 @@ namespace DomeGym.Api.Controllers;
 public class RoomsController(ISender sender) : ApiController {
     [EndpointSummary("Create a new room within the specified gym.")]
     [HttpPost]
-    public async Task<IActionResult> CreateRoom(
+    public async Task<IActionResult> CreateRoomAsync(
         CreateRoomRequest request,
         Guid gymId) {
         var command = new CreateRoomCommand(
@@ -23,7 +23,7 @@ public class RoomsController(ISender sender) : ApiController {
 
         return createRoomResult.Match(
             room => CreatedAtAction(
-                nameof(GetRoom),
+                nameof(GetRoomAsync),
                 new { gymId, RoomId = room.Id },
                 new RoomResponse(room.Id, room.Name)),
             Problem);
@@ -31,7 +31,7 @@ public class RoomsController(ISender sender) : ApiController {
 
     [EndpointSummary("Delete a room from a gym.")]
     [HttpDelete("{roomId:guid}")]
-    public async Task<IActionResult> DeleteRoom(
+    public async Task<IActionResult> DeleteRoomAsync(
         Guid gymId,
         Guid roomId) {
         var command = new DeleteRoomCommand(gymId, roomId);
@@ -43,7 +43,7 @@ public class RoomsController(ISender sender) : ApiController {
 
     [EndpointSummary("Get details for a room in a gym.")]
     [HttpGet("{roomId:guid}")]
-    public async Task<IActionResult> GetRoom(
+    public async Task<IActionResult> GetRoomAsync(
         Guid gymId,
         Guid roomId) {
         var query = new GetRoomQuery(gymId, roomId);
@@ -57,7 +57,7 @@ public class RoomsController(ISender sender) : ApiController {
 
     [EndpointSummary("List all rooms belonging to a gym.")]
     [HttpGet]
-    public async Task<IActionResult> ListRooms(Guid gymId) {
+    public async Task<IActionResult> ListRoomsAsync(Guid gymId) {
         var query = new ListRoomsQuery(gymId);
 
         var listRoomsResult = await sender.Send(query);

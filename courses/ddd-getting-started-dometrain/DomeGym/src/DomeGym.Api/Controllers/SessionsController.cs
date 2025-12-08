@@ -11,7 +11,7 @@ namespace DomeGym.Api.Controllers;
 public class SessionsController(ISender sender) : ApiController {
     [EndpointSummary("Create a session within a room.")]
     [HttpPost]
-    public async Task<IActionResult> CreateSession(
+    public async Task<IActionResult> CreateSessionAsync(
         CreateSessionRequest request,
         Guid roomId) {
         var categoriesToDomainResult = SessionCategoryUtils.ToDomain(request.Categories);
@@ -32,7 +32,7 @@ public class SessionsController(ISender sender) : ApiController {
 
         return createSessionResult.Match(
             session => CreatedAtAction(
-                nameof(GetSession),
+                nameof(GetSessionAsync),
                 new { roomId, SessionId = session.Id },
                 new SessionResponse(
                     session.Id,
@@ -48,7 +48,7 @@ public class SessionsController(ISender sender) : ApiController {
 
     [EndpointSummary("Get details for a session in a room.")]
     [HttpGet("{sessionId:guid}")]
-    public async Task<IActionResult> GetSession(
+    public async Task<IActionResult> GetSessionAsync(
         Guid roomId,
         Guid sessionId) {
         var query = new GetSessionQuery(
