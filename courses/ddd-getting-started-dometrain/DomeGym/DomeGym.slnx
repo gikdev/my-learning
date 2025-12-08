@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="App/App.csproj" />
-  <Project Path="Domain/Domain.csproj" />
-  <Project Path="UnitTest/UnitTest.csproj" />
+    <Project Path="DomeGym.Application/DomeGym.Application.csproj"/>
+    <Project Path="DomeGym.Domain/DomeGym.Domain.csproj"/>
+    <Project Path="DomeGym.Domain.UnitTests/DomeGym.Domain.UnitTests.csproj"/>
 </Solution>
