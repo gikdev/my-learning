@@ -17,7 +17,9 @@ var app = builder.Build();
 
 app.UseExceptionHandler();
 app.MapOpenApi();
-app.MapScalarApiReference();
+app.MapScalarApiReference(o => {
+    o.Layout = ScalarLayout.Classic;
+});
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
