@@ -14,4 +14,12 @@
   <Folder Name="/2.Techniques/test/">
     <Project Path="2.Techniques/test/TestingTechniques.Tests.Unit/TestingTechniques.Tests.Unit.csproj" />
   </Folder>
+
+  <Folder Name="/4.RealWorld/" />
+  <Folder Name="/4.RealWorld/src/">
+    <Project Path="4.RealWorld/src/Users.Api/Users.Api.csproj" />
+  </Folder>
+  <Folder Name="/4.RealWorld/test/">
+    <Project Path="4.RealWorld/test/Users.Api.Tests.Unit/Users.Api.Tests.Unit.csproj" />
+  </Folder>
 </Solution>
