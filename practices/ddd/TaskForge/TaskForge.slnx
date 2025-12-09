@@ -3,6 +3,6 @@
         <Project Path="src/TaskForge.Domain/TaskForge.Domain.csproj"/>
     </Folder>
     <Folder Name="/tests/">
-        <Project Path="TaskForge.Domain.Tests.Unit\TaskForge.Domain.Tests.Unit.csproj" Type="Classic C#"/>
+        <Project Path="tests\TaskForge.Domain.Tests.Unit\TaskForge.Domain.Tests.Unit.csproj" Type="Classic C#"/>
     </Folder>
 </Solution>
