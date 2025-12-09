@@ -1,5 +1,8 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/TaskForge.Domain/TaskForge.Domain.csproj" />
-  </Folder>
+    <Folder Name="/src/">
+        <Project Path="src/TaskForge.Domain/TaskForge.Domain.csproj"/>
+    </Folder>
+    <Folder Name="/tests/">
+        <Project Path="TaskForge.Domain.Tests.Unit\TaskForge.Domain.Tests.Unit.csproj" Type="Classic C#"/>
+    </Folder>
 </Solution>

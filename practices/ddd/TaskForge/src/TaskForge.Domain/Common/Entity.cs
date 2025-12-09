@@ -1,13 +1,11 @@
 namespace TaskForge.Domain.Common;
 
 public class Entity {
-    public Guid Id { get; }
-
     protected Entity(Guid id) {
         Id = id;
     }
 
-    private Entity() { }
+    public Guid Id { get; }
 
     public override bool Equals(object? obj) {
         if (obj is null || obj.GetType() != GetType()) return false;
