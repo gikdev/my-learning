@@ -8,3 +8,8 @@ tasks:
       - dotnet run --project src/GymManagement.Api
 
   dev: dotnet watch run --project src/GymManagement.Api
+
+  test:
+    aliases: [t]
+    cmds:
+        - dotnet test

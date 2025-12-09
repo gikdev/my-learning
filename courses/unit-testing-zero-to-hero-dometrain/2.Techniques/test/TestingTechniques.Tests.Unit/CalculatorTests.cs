@@ -1,7 +1,7 @@
-﻿using CalculatorLibrary;
+using FluentAssertions;
 using Xunit.Abstractions;
 
-namespace CalculatorLibraryTests;
+namespace TestingTechniques.Tests.Unit;
 
 public class CalculatorTests
 // :IAsyncLifetime
@@ -30,7 +30,7 @@ public class CalculatorTests
         var result = _sut.Add(a, b);
 
         // Assert
-        Assert.Equal(expected, result);
+        result.Should().Be(expected);
     }
 
     [Fact(Skip = "Because we have more important tests to write...")]
@@ -39,7 +39,7 @@ public class CalculatorTests
         var result = _sut.Subtract(3, 2);
 
         // Assert
-        Assert.Equal(1, result);
+        result.Should().Be(1);
     }
 
     // Keep AAA comments.
