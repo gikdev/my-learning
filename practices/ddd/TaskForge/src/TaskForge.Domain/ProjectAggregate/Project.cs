@@ -8,6 +8,7 @@ public class Project : AggregateRoot {
     private readonly List<Task> _tasks = [];
     private ProjectStatus _status;
     private NonEmptyTitle _title;
+    public NonEmptyTitle Title => _title;
 
     internal Project(
         NonEmptyTitle title,

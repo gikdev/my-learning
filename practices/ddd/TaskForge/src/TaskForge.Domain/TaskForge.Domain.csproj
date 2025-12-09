@@ -12,4 +12,8 @@
         <PackageReference Include="Throw" Version="1.4.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="TaskForge.Domain.Tests.Unit" />
+    </ItemGroup>
+
 </Project>

@@ -18,7 +18,8 @@ tasks:
     cmds:
       - dotnet restore TaskForge.slnx
 
-  # test:
-  #   desc: Run tests.
-  #   cmds:
-  #     - dotnet test
+  test:
+    aliases: [t]
+    desc: Run tests.
+    cmds:
+      - dotnet test
