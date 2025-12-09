@@ -1,9 +1,25 @@
 <Solution>
   <Folder Name="/1.Fundamentals/" />
   <Folder Name="/1.Fundamentals/src/">
-    <Project Path="1.Fundamentals\src\CalculatorLibrary\CalculatorLibrary.csproj" Type="Classic C#" />
+    <Project Path="1.Fundamentals\src\CalculatorLibrary\CalculatorLibrary.csproj" />
   </Folder>
   <Folder Name="/1.Fundamentals/test/">
-    <Project Path="1.Fundamentals\test\CalculatorLibrary.Tests.Unit\CalculatorLibrary.Tests.Unit.csproj" Type="Classic C#" />
+    <Project Path="1.Fundamentals\test\CalculatorLibrary.Tests.Unit\CalculatorLibrary.Tests.Unit.csproj" />
+  </Folder>
+
+  <Folder Name="/2.Techniques/" />
+  <Folder Name="/2.Techniques/src/">
+    <Project Path="2.Techniques/src/TestingTechniques/TestingTechniques.csproj" />
+  </Folder>
+  <Folder Name="/2.Techniques/test/">
+    <Project Path="2.Techniques/test/TestingTechniques.Tests.Unit/TestingTechniques.Tests.Unit.csproj" />
+  </Folder>
+
+  <Folder Name="/4.RealWorld/" />
+  <Folder Name="/4.RealWorld/src/">
+    <Project Path="4.RealWorld/src/Users.Api/Users.Api.csproj" />
+  </Folder>
+  <Folder Name="/4.RealWorld/test/">
+    <Project Path="4.RealWorld/test/Users.Api.Tests.Unit/Users.Api.Tests.Unit.csproj" />
   </Folder>
 </Solution>
