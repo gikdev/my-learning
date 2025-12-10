@@ -7,4 +7,5 @@ public interface ILabelsRepository {
     Task<bool> ExistsWithTitleAsync(NonEmptyTitle title, Guid? existingLabelId = null);
     Task<Label?> GetByIdAsync(Guid labelId);
     Task<List<Label>> GetAllAsync();
+    Task AddAsync(Label label);
 }
