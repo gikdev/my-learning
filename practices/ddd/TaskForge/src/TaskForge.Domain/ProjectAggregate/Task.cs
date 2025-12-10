@@ -5,9 +5,6 @@ namespace TaskForge.Domain.ProjectAggregate;
 
 public class Task : Entity {
     private readonly List<Guid> _labelIds;
-    private string? _description;
-    private TaskPriority? _priority;
-    private TaskStatus _status;
 
     internal Task(
         NonEmptyTitle title,
@@ -19,26 +16,30 @@ public class Task : Entity {
     ) : base(id ?? Guid.NewGuid()) {
         Title = title;
 
-        _description = description;
+        Description = description;
         _labelIds = labelIds ?? [];
-        _status = status ?? TaskStatus.Pending;
-        _priority = priority;
+        Status = status ?? TaskStatus.Pending;
+        Priority = priority;
     }
+
+    public string? Description { get; private set; }
+    public TaskStatus Status { get; private set; }
+    public TaskPriority? Priority { get; private set; }
 
     public NonEmptyTitle Title { get; private set; }
 
     public IReadOnlyCollection<Guid> LabelIds => _labelIds.AsReadOnly();
 
     public void ToggleStatus() {
-        _status = _status == TaskStatus.Pending ? TaskStatus.Completed : TaskStatus.Pending;
+        Status = Status == TaskStatus.Pending ? TaskStatus.Completed : TaskStatus.Pending;
     }
 
     public void ChangeDescription(string? description) {
-        _description = description;
+        Description = description;
     }
 
     public void ChangePriority(TaskPriority? priority) {
-        _priority = priority;
+        Priority = priority;
     }
 
     public void Rename(NonEmptyTitle newTitle) {

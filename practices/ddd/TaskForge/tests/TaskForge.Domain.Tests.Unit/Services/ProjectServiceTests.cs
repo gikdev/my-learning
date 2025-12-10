@@ -10,20 +10,20 @@ using DomainProject = TaskForge.Domain.ProjectAggregate.Project;
 namespace TaskForge.Domain.Tests.Unit.Services;
 
 public class ProjectServiceTests {
-    private readonly IProjectsRepository projectsRepository = Substitute.For<IProjectsRepository>();
-    private readonly ProjectService sut;
+    private readonly IProjectsRepository _projectsRepository = Substitute.For<IProjectsRepository>();
+    private readonly ProjectService _sut;
 
     public ProjectServiceTests() {
-        sut = new ProjectService(projectsRepository);
+        _sut = new ProjectService(_projectsRepository);
     }
 
     [Fact]
     public async Task CreateProjectAsync_ShouldReturnError_WhenTitleIsNotUnique() {
         // Arrange
-        projectsRepository.ExistsWithTitleAsync(Arg.Any<NonEmptyTitle>()).Returns(true);
+        _projectsRepository.ExistsWithTitleAsync(Arg.Any<NonEmptyTitle>()).Returns(true);
 
         // Act
-        var result = await sut.CreateProjectAsync("Some invalid project title");
+        var result = await _sut.CreateProjectAsync(TestConstants.Project.SampleTitle1);
 
         // Assert
         result.IsError.Should().Be(true);
@@ -33,25 +33,23 @@ public class ProjectServiceTests {
     [Fact]
     public async Task CreateProjectAsync_ShouldCreateValidProject_WhenTitleIsUnique() {
         // Arrange
-        var projectTitle = "Some valid project title";
-        projectsRepository.ExistsWithTitleAsync(Arg.Any<NonEmptyTitle>()).Returns(false);
+        _projectsRepository.ExistsWithTitleAsync(Arg.Any<NonEmptyTitle>()).Returns(false);
 
         // Act
-        var result = await sut.CreateProjectAsync(projectTitle);
+        var result = await _sut.CreateProjectAsync(TestConstants.Project.SampleTitle1);
 
         // Assert
         result.IsError.Should().Be(false);
-        result.Value.As<DomainProject>().Title.Value.Should().Be(projectTitle);
+        result.Value.As<DomainProject>().Title.Value.Should().Be(TestConstants.Project.SampleTitle1);
     }
 
     [Fact]
     public async Task RenameProjectAsync_ShouldReturnError_WhenProjectDoesntExist() {
         // Arrange
-        var projectTitle = "Some valid project title";
-        projectsRepository.GetByIdAsync(Arg.Any<Guid>()).ReturnsNull();
+        _projectsRepository.GetByIdAsync(Arg.Any<Guid>()).ReturnsNull();
 
         // Act
-        var result = await sut.RenameProjectAsync(Guid.NewGuid(), projectTitle);
+        var result = await _sut.RenameProjectAsync(Guid.NewGuid(), TestConstants.Project.SampleTitle1);
 
         // Assert
         result.IsError.Should().Be(true);
@@ -61,15 +59,14 @@ public class ProjectServiceTests {
     [Fact]
     public async Task RenameProjectAsync_ShouldReturnError_WhenProjectTitleIsNotUnique() {
         // Arrange
-        var projectTitle = "Some valid project title";
-        var titleResult = NonEmptyTitle.Create(projectTitle);
+        var titleResult = NonEmptyTitle.Create(TestConstants.Project.SampleTitle1);
         titleResult.IsError.Throw().IfTrue();
         var newProject = new DomainProject(titleResult.Value);
-        projectsRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(newProject);
-        projectsRepository.ExistsWithTitleAsync(Arg.Any<NonEmptyTitle>()).Returns(true);
+        _projectsRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(newProject);
+        _projectsRepository.ExistsWithTitleAsync(Arg.Any<NonEmptyTitle>(), Arg.Any<Guid>()).Returns(true);
 
         // Act
-        var result = await sut.RenameProjectAsync(Guid.NewGuid(), projectTitle);
+        var result = await _sut.RenameProjectAsync(Guid.NewGuid(), TestConstants.Project.SampleTitle1);
 
         // Assert
         result.IsError.Should().Be(true);
@@ -79,7 +76,17 @@ public class ProjectServiceTests {
     [Fact]
     public async Task RenameProjectAsync_ShouldRenameSuccessfully_WhenProjectTitleIsUnique() {
         // Arrange
+        var titleResult = NonEmptyTitle.Create(TestConstants.Project.SampleTitle1);
+        titleResult.IsError.Throw().IfTrue();
+        var existingProject = new DomainProject(titleResult.Value);
+        _projectsRepository.GetByIdAsync(Arg.Any<Guid>()).Returns(existingProject);
+        _projectsRepository.ExistsWithTitleAsync(Arg.Any<NonEmptyTitle>()).Returns(false);
+
         // Act
+        var result = await _sut.RenameProjectAsync(Guid.NewGuid(), TestConstants.Project.SampleTitle1);
+
         // Assert
+        result.IsError.Should().Be(false);
+        result.Value.As<DomainProject>().Title.Value.Should().Be(TestConstants.Project.SampleTitle1);
     }
 }

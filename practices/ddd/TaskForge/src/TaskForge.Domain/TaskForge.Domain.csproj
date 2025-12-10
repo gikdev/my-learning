@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="TaskForge.Domain.Tests.Unit" />
+        <InternalsVisibleTo Include="TaskForge.Domain.Tests.Unit"/>
     </ItemGroup>
 
 </Project>

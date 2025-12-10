@@ -2,6 +2,7 @@
 using TaskForge.Domain.Common.Interfaces;
 using TaskForge.Domain.Common.ValueObjects;
 using TaskForge.Domain.LabelAggregate;
+using TaskForge.Domain.ProjectAggregate;
 
 namespace TaskForge.Domain.Services;
 
@@ -40,5 +41,7 @@ public class LabelService(ILabelsRepository labelsRepository) {
         return label;
     }
 
-    // TODO: RemoveLabelFromAllProjects(Guid labelId)
+    public void RemoveLabelFromAllProjects(IEnumerable<Project> projects, Guid labelId) {
+        foreach (var project in projects) project.RemoveLabelFromAllTasks(labelId);
+    }
 }

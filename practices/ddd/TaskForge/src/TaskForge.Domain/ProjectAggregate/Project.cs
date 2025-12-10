@@ -5,21 +5,23 @@ using TaskForge.Domain.Common.ValueObjects;
 namespace TaskForge.Domain.ProjectAggregate;
 
 public class Project : AggregateRoot {
-    private readonly List<Task> _tasks = [];
     private ProjectStatus _status;
-    private NonEmptyTitle _title;
-    public NonEmptyTitle Title => _title;
 
     internal Project(
         NonEmptyTitle title,
         ProjectStatus? status = null,
         Guid? id = null
     ) : base(id ?? Guid.NewGuid()) {
-        _title = title;
+        Title = title;
         _status = status ?? ProjectStatus.Active;
     }
 
-    private bool IsCompleted => _status == ProjectStatus.Completed;
+    public List<Task> Tasks { get; } = [];
+
+    public NonEmptyTitle Title { get; private set; }
+
+    public bool IsCompleted => _status == ProjectStatus.Completed;
+    public int TaskCount => Tasks.Count;
 
     public void Complete() {
         _status = ProjectStatus.Completed;
@@ -44,7 +46,7 @@ public class Project : AggregateRoot {
         if (titleOrError.IsError)
             return titleOrError.Errors;
 
-        var exists = _tasks.Any(t => NormalizeTitle(t.Title.Value) == NormalizeTitle(title));
+        var exists = Tasks.Any(t => NormalizeTitle(t.Title.Value) == NormalizeTitle(title));
         if (exists)
             return ProjectErrors.DuplicateTaskTitle;
 
@@ -57,7 +59,7 @@ public class Project : AggregateRoot {
             priority
         );
 
-        _tasks.Add(task);
+        Tasks.Add(task);
 
         return task;
     }
@@ -67,16 +69,16 @@ public class Project : AggregateRoot {
     }
 
     internal ErrorOr<Success> Rename(NonEmptyTitle newTitle) {
-        _title = newTitle;
+        Title = newTitle;
 
         return Result.Success;
     }
 
     public ErrorOr<Success> RemoveTask(Guid taskId) {
-        var task = _tasks.FirstOrDefault(t => t.Id == taskId);
+        var task = Tasks.FirstOrDefault(t => t.Id == taskId);
         if (task is null) return ProjectErrors.TaskNotFound;
 
-        _tasks.Remove(task);
+        Tasks.Remove(task);
 
         return Result.Success;
     }
@@ -86,13 +88,13 @@ public class Project : AggregateRoot {
         if (titleOrError.IsError)
             return titleOrError.Errors;
 
-        var task = _tasks.FirstOrDefault(t => t.Id == taskId);
+        var task = Tasks.FirstOrDefault(t => t.Id == taskId);
         if (task is null)
             return ProjectErrors.TaskNotFound;
 
         var normalizedNewTitle = NormalizeTitle(titleOrError.Value.Value);
 
-        var exists = _tasks.Any(t => t.Id != taskId && NormalizeTitle(t.Title.Value) == normalizedNewTitle);
+        var exists = Tasks.Any(t => t.Id != taskId && NormalizeTitle(t.Title.Value) == normalizedNewTitle);
         if (exists)
             return ProjectErrors.DuplicateTaskTitle;
 
@@ -102,6 +104,6 @@ public class Project : AggregateRoot {
     }
 
     public void RemoveLabelFromAllTasks(Guid labelId) {
-        foreach (var task in _tasks) task.RemoveLabel(labelId);
+        foreach (var task in Tasks) task.RemoveLabel(labelId);
     }
 }
