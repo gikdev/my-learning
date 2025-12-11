@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Scalar.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TaskForge.Application\TaskForge.Application.csproj" />
+    <ProjectReference Include="..\TaskForge.Contracts\TaskForge.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

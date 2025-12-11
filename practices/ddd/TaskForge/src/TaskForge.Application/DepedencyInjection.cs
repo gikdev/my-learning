@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace TaskForge.Application;
 
 public static class DependencyInjection {
-    public static IServiceCollection AddApplication(this IServiceCollection services) {
+    public static IServiceCollection AddApplicationStuff(this IServiceCollection services) {
         services.AddMediatR(options => {
             options.RegisterServicesFromAssemblyContaining(typeof(DependencyInjection));
             options.AddOpenBehavior(typeof(ValidationBehavior<,>));
