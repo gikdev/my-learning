@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Header } from './header/header';
 import { User } from './user/user';
-import { DUMMY_USERS } from './dummy-users';
+import { DUMMY_USERS, DummyUser } from './dummy-users';
 import { Tasks } from './tasks/tasks';
 
 @Component({
@@ -14,8 +14,8 @@ export class App {
   users = DUMMY_USERS;
   selectedUserId: string | null = null;
 
-  get selectedUserName(): string|null {
-    return DUMMY_USERS.find((u) => u.id === this.selectedUserId)?.name || null;
+  get selectedUser(): DummyUser | null {
+    return DUMMY_USERS.find((u) => u.id === this.selectedUserId) || null;
   }
 
   onSelectUser(id: string) {
