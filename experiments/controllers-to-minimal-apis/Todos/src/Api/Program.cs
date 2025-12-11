@@ -1,4 +1,5 @@
 using Api;
+using Api.Endpoints;
 using App;
 using Infra;
 using Scalar.AspNetCore;
@@ -17,6 +18,7 @@ app.MapOpenApi();
 app.MapScalarApiReference();
 app.UseHttpsRedirection();
 app.UseAuthorization();
-app.MapControllers();
+// app.MapControllers();
+app.MapApiEndpoints();
 
 app.Run();

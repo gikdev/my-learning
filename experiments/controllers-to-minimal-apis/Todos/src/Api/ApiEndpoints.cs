@@ -24,11 +24,8 @@ public static class ApiEndpoints {
         public const string Create = $"{Base}";
         public const string List = $"{Base}";
 
+        public const string Update = $"{Base}/{{id:guid}}";
         public const string Delete = $"{Base}/{{id:guid}}";
         public const string GetById = $"{Base}/{{id:guid}}";
-
-        public const string Rename = $"{Base}/{{id:guid}}/title";
-        public const string ChangeImportance = $"{Base}/{{id:guid}}/importance";
-        public const string ToggleCompleted = $"{Base}/{{id:guid}}/completed";
     }
 }

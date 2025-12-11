@@ -20,8 +20,8 @@ public class Todo {
     public bool IsCompleted { get; private set; }
     public TodoImportance Importance { get; private set; }
 
-    public void ToggleCompleted() {
-        IsCompleted = !IsCompleted;
+    public void ToggleCompleted(bool? newIsCompleted = null) {
+        IsCompleted = newIsCompleted ?? !IsCompleted;
     }
 
     public ErrorOr<Success> ChangeImportance(TodoImportance importance) {
