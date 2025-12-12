@@ -1,10 +1,10 @@
 using TaskForge.Domain.Common.ValueObjects;
-using TaskForge.Domain.ProjectAggregate;
 
 namespace TaskForge.Domain.Common.Interfaces;
 
 public interface IProjectsRepository {
     Task<bool> ExistsWithTitleAsync(NonEmptyTitle title, Guid? excludeProjectId = null);
-    Task<Project?> GetByIdAsync(Guid projectId);
-    Task<List<Project>> GetAllAsync();
+    Task<ProjectAggregate.Project?> GetByIdAsync(Guid projectId);
+    Task<List<ProjectAggregate.Project>> GetAllAsync();
+    Task AddAsync(ProjectAggregate.Project project);
 }

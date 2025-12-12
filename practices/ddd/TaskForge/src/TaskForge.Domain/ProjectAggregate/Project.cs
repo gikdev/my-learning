@@ -5,7 +5,9 @@ using TaskForge.Domain.Common.ValueObjects;
 namespace TaskForge.Domain.ProjectAggregate;
 
 public class Project : AggregateRoot {
-    private ProjectStatus _status;
+    #pragma warning disable CS8618
+    private Project() {}
+    #pragma warning restore CS8618
 
     internal Project(
         NonEmptyTitle title,
@@ -13,22 +15,22 @@ public class Project : AggregateRoot {
         Guid? id = null
     ) : base(id ?? Guid.NewGuid()) {
         Title = title;
-        _status = status ?? ProjectStatus.Active;
+        Status = status ?? ProjectStatus.Active;
     }
 
-    public List<Task> Tasks { get; } = [];
-
+    public ProjectStatus Status { get; private set; }
+    public List<Task> Tasks { get; private set; } = [];
     public NonEmptyTitle Title { get; private set; }
 
-    public bool IsCompleted => _status == ProjectStatus.Completed;
+    public bool IsCompleted => Status == ProjectStatus.Completed;
     public int TaskCount => Tasks.Count;
 
     public void Complete() {
-        _status = ProjectStatus.Completed;
+        Status = ProjectStatus.Completed;
     }
 
     public void Activate() {
-        _status = ProjectStatus.Active;
+        Status = ProjectStatus.Active;
     }
 
     public ErrorOr<Task> AddTask(

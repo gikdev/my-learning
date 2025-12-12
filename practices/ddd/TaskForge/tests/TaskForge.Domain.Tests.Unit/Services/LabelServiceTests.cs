@@ -98,7 +98,7 @@ public class LabelServiceTests {
 
         // Assert
         result.IsError.Should().BeFalse();
-        result.Value.Title.Value.Should().Be(TestConstants.Label.SampleTitle2);
+        result.Value.Title.Should().Be(TestConstants.Label.SampleTitle2);
     }
 
     // RemoveLabelFromAllProjects ------------------------------------------------

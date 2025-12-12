@@ -4,6 +4,10 @@ using TaskForge.Domain.Common.ValueObjects;
 namespace TaskForge.Domain.LabelAggregate;
 
 public class Label : AggregateRoot {
+    #pragma warning disable CS8618
+    private Label() {}
+    #pragma warning restore CS8618
+
     internal Label(
         NonEmptyTitle title,
         Guid? id = null

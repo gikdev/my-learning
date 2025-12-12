@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TaskForge.Api.Constants;
+using TaskForge.Api.Mappings;
 using TaskForge.Application.Labels.Commands.CreateLabel;
 using TaskForge.Contracts.Labels;
 
@@ -14,9 +15,8 @@ public static class CreateLabelEndpoint {
 
     public static IEndpointRouteBuilder MapCreateLabel(this IEndpointRouteBuilder app) {
         app
-            .MapPost(Endpoint, HandleCreateLabel)
-            .Produces<LabelResponse>(StatusCodes.Status201Created)
-            .ProducesProblem(StatusCodes.Status400BadRequest)
+            .MapPost(Endpoint, Handle)
+            .Produces<LabelResponse>(StatusCodes.Status200OK)
             .WithSummary(Summary)
             .WithName(Name)
             .WithTags(Tag);
@@ -24,21 +24,16 @@ public static class CreateLabelEndpoint {
         return app;
     }
 
-    private static async Task<IResult> HandleCreateLabel(
+    private static async Task<IResult> Handle(
         [FromServices] ISender mediator,
         [FromBody] CreateLabelRequest request
     ) {
         var command = new CreateLabelCommand(request.Title);
 
-        var createLabelResult = await mediator.Send(command);
+        var result = await mediator.Send(command);
 
-        return createLabelResult.Match(
-            // label => Results.CreatedAtRoute(
-            //     nameof(GetLabelByIdEndpoint.Name),
-            //     new { id = label.Id },
-            //     label.MapToResponse()
-            // ),
-            _ => Results.Created(),
+        return result.Match(
+            label => Results.Ok(label.MapToResponse()),
             ApiResults.Problem
         );
     }

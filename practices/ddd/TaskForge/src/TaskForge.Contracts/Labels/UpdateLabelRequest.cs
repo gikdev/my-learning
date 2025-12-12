@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TaskForge.Contracts.Labels;
 
-public record RenameLabelRequest {
+public record UpdateLabelRequest {
     [MinLength(1)]
     public required string Title { get; init; }
 }

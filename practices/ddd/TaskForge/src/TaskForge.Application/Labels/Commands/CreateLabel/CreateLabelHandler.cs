@@ -1,5 +1,4 @@
 using ErrorOr;
-using GymManagement.Application.Common.Interfaces;
 using MediatR;
 using TaskForge.Domain.Common.Interfaces;
 using TaskForge.Domain.LabelAggregate;
@@ -8,8 +7,7 @@ using TaskForge.Domain.Services;
 namespace TaskForge.Application.Labels.Commands.CreateLabel;
 
 public class CreateLabelHandler(
-    ILabelsRepository labelsRepository,
-    IUnitOfWork unitOfWork
+    ILabelsRepository labelsRepository
 ) : IRequestHandler<CreateLabelCommand, ErrorOr<Label>> {
     public async Task<ErrorOr<Label>> Handle(
         CreateLabelCommand request,
@@ -22,7 +20,6 @@ public class CreateLabelHandler(
         var newLabel = createLabelResult.Value;
 
         await labelsRepository.AddAsync(newLabel);
-        await unitOfWork.CommitChangesAsync();
 
         return newLabel;
     }

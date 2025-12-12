@@ -15,7 +15,7 @@ public static class ListLabelsEndpoint {
 
     public static IEndpointRouteBuilder MapListLabels(this IEndpointRouteBuilder app) {
         app
-            .MapGet(Endpoint, HandleListLabels)
+            .MapGet(Endpoint, Handle)
             .Produces<IEnumerable<LabelResponse>>(StatusCodes.Status200OK)
             .WithSummary(Summary)
             .WithName(Name)
@@ -24,7 +24,7 @@ public static class ListLabelsEndpoint {
         return app;
     }
 
-    private static async Task<IResult> HandleListLabels(
+    private static async Task<IResult> Handle(
         [FromServices] ISender mediator
     ) {
         var query = new ListLabelsQuery();

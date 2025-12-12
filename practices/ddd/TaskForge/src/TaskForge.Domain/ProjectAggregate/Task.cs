@@ -6,6 +6,10 @@ namespace TaskForge.Domain.ProjectAggregate;
 public class Task : Entity {
     private readonly List<Guid> _labelIds;
 
+    #pragma warning disable CS8618
+    private Task() {}
+    #pragma warning restore CS8618
+
     internal Task(
         NonEmptyTitle title,
         TaskStatus? status = null,

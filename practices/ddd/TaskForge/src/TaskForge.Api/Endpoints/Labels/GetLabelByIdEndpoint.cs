@@ -15,7 +15,7 @@ public static class GetLabelByIdEndpoint {
 
     public static IEndpointRouteBuilder MapGetLabelById(this IEndpointRouteBuilder app) {
         app
-            .MapGet(Endpoint, HandleGetLabelById)
+            .MapGet(Endpoint, Handle)
             .Produces<LabelResponse>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .WithSummary(Summary)
@@ -25,7 +25,7 @@ public static class GetLabelByIdEndpoint {
         return app;
     }
 
-    private static async Task<IResult> HandleGetLabelById(
+    private static async Task<IResult> Handle(
         [FromServices] ISender mediator,
         [FromRoute] Guid id
     ) {
