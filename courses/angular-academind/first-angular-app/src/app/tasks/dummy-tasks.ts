@@ -1,12 +1,11 @@
-import { UserTask } from "../user-task";
+import { ITask } from './task/task.model';
 
-export const dummyTasks: UserTask[] = [
+export const dummyTasks: ITask[] = [
   {
     id: 't1',
     userId: 'u1',
     title: 'Master Angular',
-    summary:
-      'Learn all the basic and advanced features of Angular & how to apply them.',
+    summary: 'Learn all the basic and advanced features of Angular & how to apply them.',
     dueDate: '2025-12-31',
   },
   {
@@ -20,8 +19,7 @@ export const dummyTasks: UserTask[] = [
     id: 't3',
     userId: 'u3',
     title: 'Prepare issue template',
-    summary:
-      'Prepare and describe an issue template which will help with project management',
+    summary: 'Prepare and describe an issue template which will help with project management',
     dueDate: '2024-06-15',
   },
-]
+];

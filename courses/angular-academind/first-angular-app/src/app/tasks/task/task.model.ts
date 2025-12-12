@@ -1,4 +1,4 @@
-export interface UserTask {
+export interface ITask {
   id: string
   userId: string
   title: string

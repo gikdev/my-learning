@@ -1,10 +1,6 @@
-export interface DummyUser {
-  id: string;
-  name: string;
-  avatar: string;
-}
+import { IUser } from './user/user.model';
 
-export const DUMMY_USERS: DummyUser[] = [
+export const DUMMY_USERS: IUser[] = [
   {
     id: 'u1',
     name: 'Jasmine Washington',
