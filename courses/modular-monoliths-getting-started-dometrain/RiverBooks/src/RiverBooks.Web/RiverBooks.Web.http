@@ -1,9 +1,6 @@
 @BaseUrl = http://localhost:5077
 
-GET {{BaseUrl}}/weatherforecast/
+GET {{BaseUrl}}/books
 Accept: application/json
 
 ###
-
-GET {{BaseUrl}}/books
-Accept: application/json
