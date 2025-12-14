@@ -6,11 +6,14 @@ builder.Services.AddOpenApi();
 builder.Services.AddFastEndpoints();
 
 // Add module services
-builder.Services.AddBookServices();
+builder.Services.AddBookServices(builder.Configuration);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment()) app.MapOpenApi();
+if (app.Environment.IsDevelopment()) {
+    app.MapOpenApi();
+}
+
 app.UseHttpsRedirection();
 
 app.UseFastEndpoints();
