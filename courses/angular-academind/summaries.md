@@ -446,3 +446,11 @@ ticket = input.required<Ticket>({
     <!-- age can be a singal or a property -->
     <div [(myAge)]="age"></div>
     ```
+
+- Directives are **enhancements** for elements (built-in / component)
+
+- Directives don't have template, unlike components...
+    - or: components are directives with a template.
+    - for example: `ngModel` is a built-in directive.
+    - and `*ngIf` is a built-in/structural directive.
+
