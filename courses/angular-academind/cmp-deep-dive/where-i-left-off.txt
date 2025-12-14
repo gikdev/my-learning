@@ -1,2 +1,0 @@
-Folder: 06. Components & Templates - Deep Dive
-Video: 18. Making Sense of Component Host Elements
