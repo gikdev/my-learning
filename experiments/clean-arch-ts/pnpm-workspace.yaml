@@ -1,0 +1,6 @@
+packages:
+  - src/domain
+  - src/infra
+  - src/app
+  - src/api
+  - src/contracts
