@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/TwoGettingStarted/">
+    <Project Path="TwoGettingStarted/BasicBlazorApp/BasicBlazorApp.csproj" />
+    <Project Path="TwoGettingStarted/BasicConsoleApp/BasicConsoleApp.csproj" />
+    <Project Path="TwoGettingStarted/BasicMinimalApi/BasicMinimalApi.csproj" />
+    <Project Path="TwoGettingStarted/BasicWebApi/BasicWebApi.csproj" />
+  </Folder>
+  <Project Path="SerilogInAsp/SerilogInAsp.csproj" />
+  <Project Path="TestingSerilog/TestingSerilog.csproj" />
+  <Project Path="MinimalApiSerilog/MinimalApiSerilog.csproj" />
+</Solution>
