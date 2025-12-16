@@ -99,3 +99,24 @@
             .AddFilter("System", LogLevel.Debug)
             .AddFilter<ConsoleLoggerProvider>("Microsoft", LogLevel.Warning);
     ```
+
+- Log scope: the same context / situation for a couple of logs...
+
+    ```cs
+    .AddJsonConsole(o => o.IncludeScopes = true);
+    // ...
+    var paymentId = 32;
+    var total = 24.54m;
+
+    using (logger.BeginScope("{PaymentId}", paymentId)) {
+        try {
+            logger.IsEnabled(LogLevel.Information);
+            logger.LogInformation("New payment for {Total:C}", total);
+            // processing.
+        } catch {
+
+        } finally {
+            logger.LogInformation("Payment processing completed.");
+        }
+    }
+    ```

@@ -5,7 +5,7 @@ using var loggerFactory = LoggerFactory.Create(builder => {
     builder.ClearProviders();
 
     builder.AddJsonConsole(options => {
-        options.IncludeScopes = false;
+        options.IncludeScopes = true;
         options.TimestampFormat = "HH:mm:ss ";
         options.JsonWriterOptions = new() {
             Indented = true,
@@ -25,7 +25,7 @@ using var loggerFactory = LoggerFactory.Create(builder => {
         .AddFilter<ConsoleLoggerProvider>("Microsoft", LogLevel.Warning);
 });
 
-ILogger logger = loggerFactory.CreateLogger<Program>();
+ILogger<Program> logger = loggerFactory.CreateLogger<Program>();
 
 var age = 18;
 var name = "Bahrami";
@@ -45,4 +45,19 @@ try {
     throw new Exception("Something went wrong...");
 } catch (Exception ex) {
     logger.LogError(ex, "Failure during birthday of {Name}", name);
+}
+
+var paymentId = 32;
+var total = 24.54m;
+
+using (logger.BeginScope("{PaymentId}", paymentId)) {
+    try {
+        logger.IsEnabled(LogLevel.Information);
+        logger.LogInformation("New payment for {Total:C}", total);
+        // processing.
+    } catch {
+
+    } finally {
+        logger.LogInformation("Payment processing completed.");
+    }
 }
