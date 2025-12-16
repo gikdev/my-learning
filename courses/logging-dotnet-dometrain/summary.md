@@ -120,3 +120,47 @@
         }
     }
     ```
+
+- Serilog in ASP.NET Core
+
+    ```cs
+    Log.Logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(builder.Configuration)
+        .CreateLogger();
+
+    builder.Host.UseSerilog();
+    ```
+
+- Structure logging in Serilog:
+
+    ```cs
+    Payment payment = new() {
+        OccuredAt = DateTime.Now,
+        PaymentId = 1,
+        UserId = Guid.NewGuid(),
+    };
+
+    logger.Information("Payment with {@Data}", payment);
+    ```
+
+- Filter stuff:
+
+    ```cs
+    var logger = new LoggerConfiguration()
+        .WriteTo.Console(theme: AnsiConsoleTheme.Sixteen)
+        .Destructure.ByTransforming<Payment>(x => new { x.PaymentId, x.UserId }) // !!!
+        .CreateLogger();
+    ```
+
+- Hide some data:
+
+    - package: `Destructurama.Attributed`
+
+    ```cs
+    .Destructure.UsingAttributes()
+    // ...
+    [LogMasked(ShowFirst = 3, PreserveLength = true)]
+    // [NotLogged]
+    public string Email { get; set;}
+    // "itsme@me.com" -> "its*********"
+    ```
