@@ -34,3 +34,68 @@
         public const int UserBirthday = 5001;
     }
     ```
+
+- More advanced options:
+
+    ```cs
+    builder.ClearProviders();
+
+    builder.AddJsonConsole(options => {
+        options.IncludeScopes = false;
+        options.TimestampFormat = "HH:mm:ss ";
+        options.JsonWriterOptions = new() {
+            Indented = true,
+        };
+    });
+    ```
+
+- AppSettings.json
+
+    ```jsonc
+    {
+        "Logging": {
+            "LogLevel": {
+                "Default": "Information",
+                "Microsoft.AspNetCore": "Warning"
+            },
+            "Console": {
+                "LogLevel": {
+                    "Default": "Information",
+                    "Microsoft.AspNetCore": "Information"
+                },
+                "FormatterName": "json", // simple
+                "FormatterOptions": {
+                    "SingleLine": true,
+                    "IncludeScopes": true,
+                    "TimestampFormat": "HH:mm:ss ",
+                    "UseUtcTimestamp": true,
+                    "JsonWriterOptions": {
+                        "Indented": true
+                    }
+                }
+            }
+        }
+    }
+    ```
+
+- Exceptions:
+
+    ```cs
+    catch (Exception ex) {
+        logger.LogError(ex, "Failure during birthday of {Name}", name);
+    }
+    ```
+
+- Filters:
+
+    ```cs
+        builder.AddFilter((provider, category, logLevel) => {
+            return provider!.Contains("Console")
+                && category!.Contains("Microsoft.Extensions.Hosting.Internal.Host")
+                && logLevel >= LogLevel.Debug;
+        });
+
+        builder
+            .AddFilter("System", LogLevel.Debug)
+            .AddFilter<ConsoleLoggerProvider>("Microsoft", LogLevel.Warning);
+    ```
