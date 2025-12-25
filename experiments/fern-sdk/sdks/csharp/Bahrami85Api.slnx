@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Bahrami85Api.Test/Bahrami85Api.Test.csproj" />
+  <Project Path="src/Bahrami85Api/Bahrami85Api.csproj" />
+</Solution>
