@@ -1,0 +1,10 @@
+{
+  "name": "openapi-generator",
+  "version": "0.0.0",
+  "scripts": {
+    "ogc": "openapi-generator-cli"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.26.0"
+  }
+}

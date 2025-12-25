@@ -1,0 +1,434 @@
+openapi: 3.1.1
+info:
+  title: Ims.Host | v1
+  version: 1.0.0
+servers:
+- url: http://localhost:5482/
+tags:
+- name: Menu Tabs
+- name: Menus
+- name: Menu Groups
+paths:
+  /api/menus/{menuId}/tabs:
+    get:
+      operationId: ListMenuTabs
+      parameters:
+      - explode: false
+        in: path
+        name: menuId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuTabListResponse"
+          description: OK
+      summary: List a menu's tabs
+      tags:
+      - Menu Tabs
+    post:
+      operationId: CreateMenuTab
+      parameters:
+      - explode: false
+        in: path
+        name: menuId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMenuTabRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuTabItselfResponse"
+          description: OK
+      summary: Create new menu tab
+      tags:
+      - Menu Tabs
+  /api/menus/{menuId}/tabs/{menuTabId}:
+    delete:
+      operationId: DeleteMenuTabById
+      parameters:
+      - explode: false
+        in: path
+        name: menuId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: menuTabId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+      summary: Delete menu tab by ID
+      tags:
+      - Menu Tabs
+    put:
+      operationId: UpdateMenuTabById
+      parameters:
+      - explode: false
+        in: path
+        name: menuId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: menuTabId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMenuTabRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuTabItselfResponse"
+          description: OK
+      summary: Update menu tab by ID
+      tags:
+      - Menu Tabs
+  /api/menus:
+    get:
+      operationId: ListMenus
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuListResponse"
+          description: OK
+      summary: List menus
+      tags:
+      - Menus
+    post:
+      operationId: CreateMenu
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMenuRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuItselfResponse"
+          description: OK
+      summary: Create new menu
+      tags:
+      - Menus
+  /api/menus/{menuId}:
+    delete:
+      operationId: DeleteMenuById
+      parameters:
+      - explode: false
+        in: path
+        name: menuId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+      summary: Delete a menu by ID
+      tags:
+      - Menus
+    put:
+      operationId: UpdateMenuById
+      parameters:
+      - explode: false
+        in: path
+        name: menuId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMenuRequest"
+        required: true
+      responses:
+        "204":
+          description: No Content
+      summary: Update a menu by ID
+      tags:
+      - Menus
+  /api/menus/{menuId}/duplicates:
+    post:
+      operationId: DuplicateMenuById
+      parameters:
+      - explode: false
+        in: path
+        name: menuId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuItselfResponse"
+          description: Created
+      summary: Duplicate a menu by ID
+      tags:
+      - Menus
+  /api/menus/{menuId}/tabs/{menuTabId}/groups:
+    post:
+      operationId: CreateMenuGroup
+      parameters:
+      - explode: false
+        in: path
+        name: menuId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: menuTabId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMenuGroupRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuGroupItselfResponse"
+          description: OK
+      summary: Create new menu group
+      tags:
+      - Menu Groups
+components:
+  schemas:
+    CreateMenuGroupRequest:
+      example:
+        imageUrl: imageUrl
+        name: name
+        description: description
+        order: 0
+      properties:
+        name:
+          type: string
+        order:
+          format: int32
+          type: integer
+        description:
+          nullable: true
+          type: string
+        imageUrl:
+          nullable: true
+          type: string
+      required:
+      - name
+      - order
+    CreateMenuRequest:
+      example:
+        name: name
+        description: description
+      properties:
+        name:
+          type: string
+        description:
+          nullable: true
+          type: string
+      required:
+      - name
+    CreateMenuTabRequest:
+      example:
+        name: name
+        description: description
+        order: 0
+      properties:
+        name:
+          type: string
+        order:
+          format: int32
+          type: integer
+        description:
+          nullable: true
+          type: string
+      required:
+      - name
+      - order
+    MenuGroupItselfResponse:
+      example:
+        imageUrl: imageUrl
+        name: name
+        description: description
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        order: 0
+      properties:
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+        order:
+          format: int32
+          type: integer
+        description:
+          nullable: true
+          type: string
+        imageUrl:
+          nullable: true
+          type: string
+      required:
+      - description
+      - id
+      - imageUrl
+      - name
+      - order
+    MenuItselfResponse:
+      example:
+        name: name
+        description: description
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+        description:
+          nullable: true
+          type: string
+      required:
+      - id
+      - name
+    MenuListResponse:
+      example:
+        items:
+        - name: name
+          description: description
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - name: name
+          description: description
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/MenuItselfResponse"
+          type: array
+      required:
+      - items
+    MenuTabItselfResponse:
+      example:
+        name: name
+        description: description
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        order: 0
+      properties:
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+        order:
+          format: int32
+          type: integer
+        description:
+          nullable: true
+          type: string
+      required:
+      - id
+      - name
+      - order
+    MenuTabListResponse:
+      example:
+        items:
+        - name: name
+          description: description
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          order: 0
+        - name: name
+          description: description
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          order: 0
+      properties:
+        items:
+          items:
+            $ref: "#/components/schemas/MenuTabItselfResponse"
+          type: array
+      required:
+      - items
+    UpdateMenuRequest:
+      example:
+        name: name
+        description: description
+      properties:
+        name:
+          type: string
+        description:
+          nullable: true
+          type: string
+      required:
+      - name
+    UpdateMenuTabRequest:
+      example:
+        name: name
+        description: description
+        order: 0
+      properties:
+        name:
+          type: string
+        order:
+          format: int32
+          type: integer
+        description:
+          nullable: true
+          type: string
+      required:
+      - name
+      - order
+
