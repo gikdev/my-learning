@@ -1,0 +1,26 @@
+@if (showResults()) {
+<table>
+  <thead>
+    <tr>
+      <td>Year</td>
+      <td>Annual Investment</td>
+      <td>Interest</td>
+      <td>Total Amount Invested</td>
+      <td>Total Interest</td>
+      <td>Value End Of Year</td>
+    </tr>
+  </thead>
+  <tbody>
+    @for (item of annualData(); track item.year) {
+    <tr>
+      <td>{{ item.year }}</td>
+      <td>${{ item.annualInvestment.toFixed(2) }}</td>
+      <td>${{ item.interest.toFixed(2) }}</td>
+      <td>${{ item.totalAmountInvested.toFixed(2) }}</td>
+      <td>${{ item.totalInterest.toFixed(2) }}</td>
+      <td>${{ item.valueEndOfYear.toFixed(2) }}</td>
+    </tr>
+    }
+  </tbody>
+</table>
+}
