@@ -7,3 +7,4 @@ This repository is mainly for practice, experimentation, and tracking my progres
 - **courses/** – Code written while following tutorials or online courses.
 - **experiments/** – Small tests, prototypes, or ideas I try out.
 - **notes/** – Optional: short summaries or takeaways from what I learn.
+- **practices/** – Exercises, challenges, or hands-on tasks done to reinforce concepts and improve problem-solving skills.
