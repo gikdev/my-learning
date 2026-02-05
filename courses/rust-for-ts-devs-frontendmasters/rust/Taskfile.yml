@@ -3,3 +3,5 @@ version: '3'
 
 tasks:
   default: cargo run
+  e: nvim .
+  edit: nvim .

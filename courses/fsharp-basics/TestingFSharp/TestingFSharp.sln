@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SimpleConsole", "SimpleConsole\SimpleConsole.fsproj", "{C3ABF75A-62E3-492D-8883-50E7665C6646}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FirstApi", "FirstApi\FirstApi.fsproj", "{4C7FFC6A-BFFB-41BC-958F-7FED60B4B259}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3ABF75A-62E3-492D-8883-50E7665C6646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3ABF75A-62E3-492D-8883-50E7665C6646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3ABF75A-62E3-492D-8883-50E7665C6646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3ABF75A-62E3-492D-8883-50E7665C6646}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C7FFC6A-BFFB-41BC-958F-7FED60B4B259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C7FFC6A-BFFB-41BC-958F-7FED60B4B259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C7FFC6A-BFFB-41BC-958F-7FED60B4B259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C7FFC6A-BFFB-41BC-958F-7FED60B4B259}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
