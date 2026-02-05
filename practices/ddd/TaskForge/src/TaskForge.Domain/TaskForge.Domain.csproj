@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <ItemGroup>
+        <PackageReference Include="Ardalis.SmartEnum" />
+        <PackageReference Include="ErrorOr" />
+        <PackageReference Include="Throw" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="TaskForge.Domain.Tests.Unit"/>
+    </ItemGroup>
+
+</Project>
