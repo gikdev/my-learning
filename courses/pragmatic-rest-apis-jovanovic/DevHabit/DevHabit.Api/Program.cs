@@ -10,7 +10,10 @@ using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(o =>
+{
+    o.ReturnHttpNotAcceptable = true;
+}).AddXmlSerializerFormatters();
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbCtx>(o =>
 {
