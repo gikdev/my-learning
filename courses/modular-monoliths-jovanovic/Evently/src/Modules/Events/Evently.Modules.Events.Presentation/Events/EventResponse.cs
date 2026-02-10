@@ -1,4 +1,4 @@
-﻿namespace Evently.Modules.Events.Api.Events;
+﻿namespace Evently.Modules.Events.Presentation.Events;
 
 internal sealed record EventResponse
 {

@@ -1,33 +1,30 @@
-﻿using Evently.Modules.Events.Api.Database;
+﻿using Evently.Modules.Events.Application.Events.CreateEvent;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
-namespace Evently.Modules.Events.Api.Events;
+namespace Evently.Modules.Events.Presentation.Events;
 
-public static class CreateEvent
+internal static class CreateEvent
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("events", async ([FromBody] Request request, [FromServices] EventsDbCtx db) =>
+        app.MapPost("events", async ([FromBody] Request request, [FromServices] ISender sender) =>
         {
-            var @event = new Event
+            var command = new CreateEventCommand
             {
-                Id = Guid.NewGuid(),
-                Title = request.Title,
                 Description = request.Description,
-                Location = request.Location,
                 EndsAtUtc = request.EndsAtUtc,
+                Location = request.Location,
                 StartsAtUtc = request.StartsAtUtc,
-                Status = EventStatus.Draft,
+                Title = request.Title,
             };
 
-            db.Events.Add(@event);
+            Guid eventId = await sender.Send(command);
 
-            await db.SaveChangesAsync();
-
-            return Results.Ok(@event.Id);
+            return Results.Ok(eventId);
         }).WithTags(Tags.Events);
     }
 
