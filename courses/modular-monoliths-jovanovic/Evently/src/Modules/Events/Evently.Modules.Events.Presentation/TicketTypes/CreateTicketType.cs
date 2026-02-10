@@ -8,26 +8,22 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Events.Presentation.TicketTypes;
 
-internal static class CreateTicketType
-{
-    public static void MapEndpoint(IEndpointRouteBuilder app)
-    {
-        app.MapPost("ticket-types", async (Request request, ISender sender) =>
-        {
-            Result<Guid> result = await sender.Send(new CreateTicketTypeCommand(
-                request.EventId,
-                request.Name,
-                request.Price,
-                request.Currency,
-                request.Quantity));
+internal static class CreateTicketType {
+    public static void MapEndpoint(IEndpointRouteBuilder app) {
+        app.MapPost("ticket-types", async (Request request, ISender sender) => {
+                Result<Guid> result = await sender.Send(new CreateTicketTypeCommand(
+                    request.EventId,
+                    request.Name,
+                    request.Price,
+                    request.Currency,
+                    request.Quantity));
 
-            return result.Match(Results.Ok, ApiResults.ApiResults.Problem);
-        })
-        .WithTags(Tags.TicketTypes);
+                return result.Match(Results.Ok, ApiResults.ApiResults.Problem);
+            })
+            .WithTags(Tags.TicketTypes);
     }
 
-    internal sealed class Request
-    {
+    internal sealed class Request {
         public Guid EventId { get; init; }
 
         public string Name { get; init; }

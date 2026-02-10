@@ -1,7 +1,6 @@
 ﻿namespace Evently.Modules.Events.Domain.Abstractions;
 
-public enum ErrorType
-{
+public enum ErrorType {
     Failure = 0,
     Validation = 1,
     Problem = 2,

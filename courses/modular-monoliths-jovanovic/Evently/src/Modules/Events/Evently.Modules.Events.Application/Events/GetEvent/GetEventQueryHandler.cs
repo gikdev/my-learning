@@ -8,10 +8,8 @@ using Evently.Modules.Events.Domain.Events;
 namespace Evently.Modules.Events.Application.Events.GetEvent;
 
 internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFactory)
-    : IQueryHandler<GetEventQuery, EventResponse>
-{
-    public async Task<Result<EventResponse>> Handle(GetEventQuery request, CancellationToken cancellationToken)
-    {
+    : IQueryHandler<GetEventQuery, EventResponse> {
+    public async Task<Result<EventResponse>> Handle(GetEventQuery request, CancellationToken cancellationToken) {
         await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
 
         const string sql =
@@ -37,19 +35,14 @@ internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFact
         Dictionary<Guid, EventResponse> eventsDictionary = [];
         await connection.QueryAsync<EventResponse, TicketTypeResponse?, EventResponse>(
             sql,
-            (@event, ticketType) =>
-            {
-                if (eventsDictionary.TryGetValue(@event.Id, out EventResponse? existingEvent))
-                {
+            (@event, ticketType) => {
+                if (eventsDictionary.TryGetValue(@event.Id, out EventResponse? existingEvent)) {
                     @event = existingEvent;
-                }
-                else
-                {
+                } else {
                     eventsDictionary.Add(@event.Id, @event);
                 }
 
-                if (ticketType is not null)
-                {
+                if (ticketType is not null) {
                     @event.TicketTypes.Add(ticketType);
                 }
 
@@ -58,8 +51,7 @@ internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFact
             request,
             splitOn: nameof(TicketTypeResponse.TicketTypeId));
 
-        if (!eventsDictionary.TryGetValue(request.EventId, out EventResponse eventResponse))
-        {
+        if (!eventsDictionary.TryGetValue(request.EventId, out EventResponse eventResponse)) {
             return Result.Failure<EventResponse>(EventErrors.NotFound(request.EventId));
         }
 

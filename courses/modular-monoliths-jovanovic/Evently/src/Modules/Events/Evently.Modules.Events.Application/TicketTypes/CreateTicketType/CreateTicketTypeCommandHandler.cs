@@ -10,14 +10,11 @@ internal sealed class CreateTicketTypeCommandHandler(
     IEventRepository eventRepository,
     ITicketTypeRepository ticketTypeRepository,
     IUnitOfWork unitOfWork)
-    : ICommandHandler<CreateTicketTypeCommand, Guid>
-{
-    public async Task<Result<Guid>> Handle(CreateTicketTypeCommand request, CancellationToken cancellationToken)
-    {
+    : ICommandHandler<CreateTicketTypeCommand, Guid> {
+    public async Task<Result<Guid>> Handle(CreateTicketTypeCommand request, CancellationToken cancellationToken) {
         Event? @event = await eventRepository.GetAsync(request.EventId, cancellationToken);
 
-        if (@event is null)
-        {
+        if (@event is null) {
             return Result.Failure<Guid>(EventErrors.NotFound(request.EventId));
         }
 

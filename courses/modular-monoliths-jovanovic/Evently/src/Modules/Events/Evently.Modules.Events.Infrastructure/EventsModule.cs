@@ -1,4 +1,5 @@
-﻿using Evently.Modules.Events.Application.Abstractions.Clock;
+﻿using Evently.Modules.Events.Application;
+using Evently.Modules.Events.Application.Abstractions.Clock;
 using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.Categories;
 using Evently.Modules.Events.Domain.Events;
@@ -23,10 +24,8 @@ using Npgsql;
 
 namespace Evently.Modules.Events.Infrastructure;
 
-public static class EventsModule
-{
-    public static void MapEndpoints(IEndpointRouteBuilder app)
-    {
+public static class EventsModule {
+    public static void MapEndpoints(IEndpointRouteBuilder app) {
         TicketTypeEndpoints.MapEndpoints(app);
         CategoryEndpoints.MapEndpoints(app);
         EventEndpoints.MapEndpoints(app);
@@ -34,22 +33,19 @@ public static class EventsModule
 
     public static IServiceCollection AddEventsModule(
         this IServiceCollection services,
-        IConfiguration configuration)
-    {
-        services.AddMediatR(config =>
-        {
-            config.RegisterServicesFromAssembly(Application.AssemblyReference.Assembly);
+        IConfiguration configuration) {
+        services.AddMediatR(config => {
+            config.RegisterServicesFromAssembly(AssemblyReference.Assembly);
         });
 
-        services.AddValidatorsFromAssembly(Application.AssemblyReference.Assembly, includeInternalTypes: true);
+        services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
 
         services.AddInfrastructure(configuration);
 
         return services;
     }
 
-    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
-    {
+    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration) {
         string databaseConnectionString = configuration.GetConnectionString("Database")!;
 
         NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(databaseConnectionString).Build();

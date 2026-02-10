@@ -5,10 +5,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Evently.Modules.Events.Infrastructure.TicketTypes;
 
-internal sealed class TicketTypeConfiguration : IEntityTypeConfiguration<TicketType>
-{
-    public void Configure(EntityTypeBuilder<TicketType> builder)
-    {
+internal sealed class TicketTypeConfiguration : IEntityTypeConfiguration<TicketType> {
+    public void Configure(EntityTypeBuilder<TicketType> builder) {
         builder.HasOne<Event>().WithMany().HasForeignKey(t => t.EventId);
     }
 }

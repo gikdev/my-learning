@@ -3,10 +3,8 @@ using Evently.Modules.Events.Domain.Categories;
 
 namespace Evently.Modules.Events.Domain.Events;
 
-public sealed class Event : Entity
-{
-    private Event()
-    {
+public sealed class Event : Entity {
+    private Event() {
     }
 
     public Guid Id { get; private set; }
@@ -31,15 +29,12 @@ public sealed class Event : Entity
         string description,
         string location,
         DateTime startsAtUtc,
-        DateTime? endsAtUtc)
-    {
-        if (endsAtUtc.HasValue && endsAtUtc < startsAtUtc)
-        {
+        DateTime? endsAtUtc) {
+        if (endsAtUtc.HasValue && endsAtUtc < startsAtUtc) {
             return Result.Failure<Event>(EventErrors.EndDatePrecedesStartDate);
         }
 
-        var @event = new Event
-        {
+        var @event = new Event {
             Id = Guid.NewGuid(),
             CategoryId = category.Id,
             Title = title,
@@ -55,10 +50,8 @@ public sealed class Event : Entity
         return @event;
     }
 
-    public Result Publish()
-    {
-        if (Status != EventStatus.Draft)
-        {
+    public Result Publish() {
+        if (Status != EventStatus.Draft) {
             return Result.Failure(EventErrors.NotDraft);
         }
 
@@ -69,10 +62,8 @@ public sealed class Event : Entity
         return Result.Success();
     }
 
-    public void Reschedule(DateTime startsAtUtc, DateTime? endsAtUtc)
-    {
-        if (StartsAtUtc == startsAtUtc && EndsAtUtc == endsAtUtc)
-        {
+    public void Reschedule(DateTime startsAtUtc, DateTime? endsAtUtc) {
+        if (StartsAtUtc == startsAtUtc && EndsAtUtc == endsAtUtc) {
             return;
         }
 
@@ -82,15 +73,12 @@ public sealed class Event : Entity
         Raise(new EventRescheduledDomainEvent(Id, StartsAtUtc, EndsAtUtc));
     }
 
-    public Result Cancel(DateTime utcNow)
-    {
-        if (Status == EventStatus.Canceled)
-        {
+    public Result Cancel(DateTime utcNow) {
+        if (Status == EventStatus.Canceled) {
             return Result.Failure(EventErrors.AlreadyCanceled);
         }
 
-        if (StartsAtUtc < utcNow)
-        {
+        if (StartsAtUtc < utcNow) {
             return Result.Failure(EventErrors.AlreadyStarted);
         }
 

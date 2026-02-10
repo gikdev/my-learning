@@ -8,12 +8,10 @@ using Evently.Modules.Events.Domain.Abstractions;
 namespace Evently.Modules.Events.Application.Categories.GetCategories;
 
 internal sealed class GetCategoriesQueryHandler(IDbConnectionFactory dbConnectionFactory)
-    : IQueryHandler<GetCategoriesQuery, IReadOnlyCollection<CategoryResponse>>
-{
+    : IQueryHandler<GetCategoriesQuery, IReadOnlyCollection<CategoryResponse>> {
     public async Task<Result<IReadOnlyCollection<CategoryResponse>>> Handle(
         GetCategoriesQuery request,
-        CancellationToken cancellationToken)
-    {
+        CancellationToken cancellationToken) {
         await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
 
         const string sql =
