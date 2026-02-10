@@ -1,13 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Evently.Modules.Events.Domain.Abstractions;
+namespace Evently.Common.Domain;
 
 public class Result {
     public Result(bool isSuccess, Error error) {
-        if ((isSuccess && error != Error.None) ||
-            (!isSuccess && error == Error.None)) {
-            throw new ArgumentException("Invalid error", nameof(error));
-        }
+        if (isSuccess && error != Error.None ||
+            !isSuccess && error == Error.None)             throw new ArgumentException("Invalid error", nameof(error));
 
         IsSuccess = isSuccess;
         Error = error;

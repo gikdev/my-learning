@@ -1,5 +1,6 @@
-﻿using Evently.Modules.Events.Application;
-using Evently.Modules.Events.Application.Abstractions.Clock;
+﻿using Evently.Common.Application.Clock;
+using Evently.Common.Application.Data;
+using Evently.Modules.Events.Application;
 using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.Categories;
 using Evently.Modules.Events.Domain.Events;
@@ -33,7 +34,8 @@ public static class EventsModule {
 
     public static IServiceCollection AddEventsModule(
         this IServiceCollection services,
-        IConfiguration configuration) {
+        IConfiguration configuration
+    ) {
         services.AddMediatR(config => {
             config.RegisterServicesFromAssembly(AssemblyReference.Assembly);
         });
@@ -62,7 +64,8 @@ public static class EventsModule {
                     npgsqlOptions => npgsqlOptions
                         .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Events))
                 .UseSnakeCaseNamingConvention()
-                .AddInterceptors());
+                .AddInterceptors()
+        );
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<EventsDbContext>());
 

@@ -1,34 +1,31 @@
 using Evently.Api.Extensions;
+using Evently.Common.Application;
+using Evently.Common.Infrastructure;
 using Evently.Modules.Events.Infrastructure;
 
-namespace Evently.Api;
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+ConfigurationManager config = builder.Configuration;
 
-#pragma warning disable CA1515 // Consider making public types internal
-public static class Program
-#pragma warning restore CA1515
-{
-    public static void Main(string[] args) {
-        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-        ConfigurationManager config = builder.Configuration;
+builder.Services.AddAuthorization();
 
-        builder.Services.AddAuthorization();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+builder.Services.AddApplication([
+    Evently.Modules.Events.Application.AssemblyReference.Assembly,
+]);
+builder.Services.AddInfrastructure(config.GetConnectionString("Database")!);
+builder.Services.AddEventsModule(config);
 
-        builder.Services.AddEventsModule(config);
+WebApplication app = builder.Build();
 
-        WebApplication app = builder.Build();
+if (app.Environment.IsDevelopment()) {
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
-        if (app.Environment.IsDevelopment()) {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-
-            app.ApplyMigrations();
-        }
-
-        EventsModule.MapEndpoints(app);
-
-        app.Run();
-    }
+    app.ApplyMigrations();
 }
+
+EventsModule.MapEndpoints(app);
+
+app.Run();
