@@ -1,11 +1,11 @@
-﻿using MediatR;
+﻿using Evently.Modules.Events.Application.Abstractions.Messaging;
 
 namespace Evently.Modules.Events.Application.Events.CreateEvent;
 
-public sealed record CreateEventCommand : IRequest<Guid> {
-    public required string Title { get; init; }
-    public required string Description { get; init; }
-    public required string Location { get; init; }
-    public required DateTime StartsAtUtc { get; init; }
-    public required DateTime? EndsAtUtc { get; init; }
-}
+public sealed record CreateEventCommand(
+    Guid CategoryId,
+    string Title,
+    string Description,
+    string Location,
+    DateTime StartsAtUtc,
+    DateTime? EndsAtUtc) : ICommand<Guid>;

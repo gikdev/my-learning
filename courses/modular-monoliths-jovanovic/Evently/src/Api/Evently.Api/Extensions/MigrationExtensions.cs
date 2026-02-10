@@ -7,7 +7,7 @@ internal static class MigrationExtensions {
     internal static void ApplyMigrations(this IApplicationBuilder app) {
         using IServiceScope scope = app.ApplicationServices.CreateScope();
 
-        ApplyMigration<EventsDbCtx>(scope);
+        ApplyMigration<EventsDbContext>(scope);
     }
 
     private static void ApplyMigration<TDbCtx>(IServiceScope scope) where TDbCtx : DbContext {
