@@ -2,8 +2,10 @@
 
 namespace Evently.Modules.Events.Domain.Categories;
 
-public sealed class Category : Entity {
-    private Category() {
+public sealed class Category : Entity
+{
+    private Category()
+    {
     }
 
     public Guid Id { get; private set; }
@@ -12,8 +14,10 @@ public sealed class Category : Entity {
 
     public bool IsArchived { get; private set; }
 
-    public static Category Create(string name) {
-        var category = new Category {
+    public static Category Create(string name)
+    {
+        var category = new Category
+        {
             Id = Guid.NewGuid(),
             Name = name,
             IsArchived = false
@@ -24,14 +28,17 @@ public sealed class Category : Entity {
         return category;
     }
 
-    public void Archive() {
+    public void Archive()
+    {
         IsArchived = true;
 
         Raise(new CategoryArchivedDomainEvent(Id));
     }
 
-    public void ChangeName(string name) {
-        if (Name == name) {
+    public void ChangeName(string name)
+    {
+        if (Name == name)
+        {
             return;
         }
 

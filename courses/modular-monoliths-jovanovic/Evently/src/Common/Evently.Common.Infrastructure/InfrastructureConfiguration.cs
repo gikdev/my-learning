@@ -1,4 +1,4 @@
-using Evently.Common.Application.Clock;
+﻿using Evently.Common.Application.Clock;
 using Evently.Common.Application.Data;
 using Evently.Common.Infrastructure.Clock;
 using Evently.Common.Infrastructure.Data;
@@ -8,8 +8,12 @@ using Npgsql;
 
 namespace Evently.Common.Infrastructure;
 
-public static class InfrastructureConfiguration {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, string databaseConnectionString) {
+public static class InfrastructureConfiguration
+{
+    public static IServiceCollection AddInfrastructure(
+        this IServiceCollection services,
+        string databaseConnectionString)
+    {
         NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(databaseConnectionString).Build();
         services.TryAddSingleton(npgsqlDataSource);
 

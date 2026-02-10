@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Evently.Modules.Events.Infrastructure.Events;
 
-internal sealed class EventConfiguration : IEntityTypeConfiguration<Event> {
-    public void Configure(EntityTypeBuilder<Event> builder) {
+internal sealed class EventConfiguration : IEntityTypeConfiguration<Event>
+{
+    public void Configure(EntityTypeBuilder<Event> builder)
+    {
         builder.HasOne<Category>().WithMany();
     }
 }

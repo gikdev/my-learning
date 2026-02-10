@@ -1,6 +1,5 @@
 ﻿using Evently.Common.Application.Clock;
 using Evently.Common.Application.Data;
-using Evently.Modules.Events.Application;
 using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.Categories;
 using Evently.Modules.Events.Domain.Events;
@@ -23,8 +22,10 @@ using Npgsql;
 
 namespace Evently.Modules.Events.Infrastructure;
 
-public static class EventsModule {
-    public static void MapEndpoints(IEndpointRouteBuilder app) {
+public static class EventsModule
+{
+    public static void MapEndpoints(IEndpointRouteBuilder app)
+    {
         TicketTypeEndpoints.MapEndpoints(app);
         CategoryEndpoints.MapEndpoints(app);
         EventEndpoints.MapEndpoints(app);
@@ -32,20 +33,15 @@ public static class EventsModule {
 
     public static IServiceCollection AddEventsModule(
         this IServiceCollection services,
-        IConfiguration configuration
-    ) {
-        services.AddMediatR(config => {
-            config.RegisterServicesFromAssembly(AssemblyReference.Assembly);
-        });
-
-        services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
-
+        IConfiguration configuration)
+    {
         services.AddInfrastructure(configuration);
 
         return services;
     }
 
-    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration) {
+    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    {
         string databaseConnectionString = configuration.GetConnectionString("Database")!;
 
         services.AddDbContext<EventsDbContext>(options =>
@@ -55,8 +51,7 @@ public static class EventsModule {
                     npgsqlOptions => npgsqlOptions
                         .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Events))
                 .UseSnakeCaseNamingConvention()
-                .AddInterceptors()
-        );
+                .AddInterceptors());
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<EventsDbContext>());
 

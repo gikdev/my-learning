@@ -2,6 +2,7 @@
 
 namespace Evently.Common.Application.Data;
 
-public interface IDbConnectionFactory {
+public interface IDbConnectionFactory
+{
     ValueTask<DbConnection> OpenConnectionAsync();
 }

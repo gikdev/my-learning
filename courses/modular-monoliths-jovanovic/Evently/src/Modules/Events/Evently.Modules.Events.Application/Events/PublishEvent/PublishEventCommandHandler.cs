@@ -10,21 +10,26 @@ internal sealed class PublishEventCommandHandler(
     IEventRepository eventRepository,
     ITicketTypeRepository ticketTypeRepository,
     IUnitOfWork unitOfWork)
-    : ICommandHandler<PublishEventCommand> {
-    public async Task<Result> Handle(PublishEventCommand request, CancellationToken cancellationToken) {
+    : ICommandHandler<PublishEventCommand>
+{
+    public async Task<Result> Handle(PublishEventCommand request, CancellationToken cancellationToken)
+    {
         Event? @event = await eventRepository.GetAsync(request.EventId, cancellationToken);
 
-        if (@event is null) {
+        if (@event is null)
+        {
             return Result.Failure(EventErrors.NotFound(request.EventId));
         }
 
-        if (!await ticketTypeRepository.ExistsAsync(@event.Id, cancellationToken)) {
+        if (!await ticketTypeRepository.ExistsAsync(@event.Id, cancellationToken))
+        {
             return Result.Failure(EventErrors.NoTicketsFound);
         }
 
         Result result = @event.Publish();
 
-        if (result.IsFailure) {
+        if (result.IsFailure)
+        {
             return Result.Failure(result.Error);
         }
 

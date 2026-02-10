@@ -3,8 +3,10 @@ using Evently.Modules.Events.Domain.Events;
 
 namespace Evently.Modules.Events.Domain.TicketTypes;
 
-public sealed class TicketType : Entity {
-    private TicketType() {
+public sealed class TicketType : Entity
+{
+    private TicketType()
+    {
     }
 
     public Guid Id { get; private set; }
@@ -24,8 +26,10 @@ public sealed class TicketType : Entity {
         string name,
         decimal price,
         string currency,
-        decimal quantity) {
-        var ticketType = new TicketType {
+        decimal quantity)
+    {
+        var ticketType = new TicketType
+        {
             Id = Guid.NewGuid(),
             EventId = @event.Id,
             Name = name,
@@ -37,8 +41,10 @@ public sealed class TicketType : Entity {
         return ticketType;
     }
 
-    public void UpdatePrice(decimal price) {
-        if (Price == price) {
+    public void UpdatePrice(decimal price)
+    {
+        if (Price == price)
+        {
             return;
         }
 

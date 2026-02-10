@@ -2,8 +2,10 @@
 
 namespace Evently.Modules.Events.Application.Events.CreateEvent;
 
-internal sealed class CreateEventCommandValidator : AbstractValidator<CreateEventCommand> {
-    public CreateEventCommandValidator() {
+internal sealed class CreateEventCommandValidator : AbstractValidator<CreateEventCommand>
+{
+    public CreateEventCommandValidator()
+    {
         RuleFor(c => c.CategoryId).NotEmpty();
         RuleFor(c => c.Title).NotEmpty();
         RuleFor(c => c.Description).NotEmpty();

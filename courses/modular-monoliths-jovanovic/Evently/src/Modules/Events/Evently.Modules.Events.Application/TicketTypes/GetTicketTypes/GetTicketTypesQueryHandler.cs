@@ -3,15 +3,18 @@ using Dapper;
 using Evently.Common.Application.Data;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
+using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Application.TicketTypes.GetTicketType;
 
 namespace Evently.Modules.Events.Application.TicketTypes.GetTicketTypes;
 
 internal sealed class GetTicketTypesQueryHandler(IDbConnectionFactory dbConnectionFactory)
-    : IQueryHandler<GetTicketTypesQuery, IReadOnlyCollection<TicketTypeResponse>> {
+    : IQueryHandler<GetTicketTypesQuery, IReadOnlyCollection<TicketTypeResponse>>
+{
     public async Task<Result<IReadOnlyCollection<TicketTypeResponse>>> Handle(
         GetTicketTypesQuery request,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
 
         const string sql =

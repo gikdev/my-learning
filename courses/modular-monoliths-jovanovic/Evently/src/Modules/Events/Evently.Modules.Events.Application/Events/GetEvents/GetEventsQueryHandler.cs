@@ -3,14 +3,17 @@ using Dapper;
 using Evently.Common.Application.Data;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
+using Evently.Modules.Events.Application.Abstractions.Data;
 
 namespace Evently.Modules.Events.Application.Events.GetEvents;
 
 internal sealed class GetEventsQueryHandler(IDbConnectionFactory dbConnectionFactory)
-    : IQueryHandler<GetEventsQuery, IReadOnlyCollection<EventResponse>> {
+    : IQueryHandler<GetEventsQuery, IReadOnlyCollection<EventResponse>>
+{
     public async Task<Result<IReadOnlyCollection<EventResponse>>> Handle(
         GetEventsQuery request,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
 
         const string sql =

@@ -1,6 +1,7 @@
 ﻿namespace Evently.Common.Domain;
 
-public enum ErrorType {
+public enum ErrorType
+{
     Failure = 0,
     Validation = 1,
     Problem = 2,

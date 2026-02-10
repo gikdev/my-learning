@@ -12,15 +12,19 @@ internal sealed class CreateEventCommandHandler(
     ICategoryRepository categoryRepository,
     IEventRepository eventRepository,
     IUnitOfWork unitOfWork)
-    : ICommandHandler<CreateEventCommand, Guid> {
-    public async Task<Result<Guid>> Handle(CreateEventCommand request, CancellationToken cancellationToken) {
-        if (request.StartsAtUtc < dateTimeProvider.UtcNow) {
+    : ICommandHandler<CreateEventCommand, Guid>
+{
+    public async Task<Result<Guid>> Handle(CreateEventCommand request, CancellationToken cancellationToken)
+    {
+        if (request.StartsAtUtc < dateTimeProvider.UtcNow)
+        {
             return Result.Failure<Guid>(EventErrors.StartDateInPast);
         }
 
         Category? category = await categoryRepository.GetAsync(request.CategoryId, cancellationToken);
 
-        if (category is null) {
+        if (category is null)
+        {
             return Result.Failure<Guid>(CategoryErrors.NotFound(request.CategoryId));
         }
 
@@ -32,7 +36,8 @@ internal sealed class CreateEventCommandHandler(
             request.StartsAtUtc,
             request.EndsAtUtc);
 
-        if (result.IsFailure) {
+        if (result.IsFailure)
+        {
             return Result.Failure<Guid>(result.Error);
         }
 

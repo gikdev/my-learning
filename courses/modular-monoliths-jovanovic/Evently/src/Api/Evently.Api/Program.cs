@@ -5,29 +5,27 @@ using Evently.Modules.Events.Infrastructure;
 using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-ConfigurationManager config = builder.Configuration;
 
-builder.Host.UseSerilog((ctx, loggerConfig) => loggerConfig
-    .ReadFrom.Configuration(ctx.Configuration)
-);
-
-builder.Services.AddAuthorization();
+builder.Host.UseSerilog((context, loggerConfig) => loggerConfig.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => {
+builder.Services.AddSwaggerGen(options =>
+{
     options.CustomSchemaIds(t => t.FullName?.Replace("+", "."));
 });
 
-builder.Services.AddApplication([
-    Evently.Modules.Events.Application.AssemblyReference.Assembly,
-]);
-builder.Services.AddInfrastructure(config.GetConnectionString("Database")!);
+builder.Services.AddApplication([Evently.Modules.Events.Application.AssemblyReference.Assembly]);
+
+builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!);
+
 builder.Configuration.AddModuleConfiguration(["events"]);
-builder.Services.AddEventsModule(config);
+
+builder.Services.AddEventsModule(builder.Configuration);
 
 WebApplication app = builder.Build();
 
-if (app.Environment.IsDevelopment()) {
+if (app.Environment.IsDevelopment())
+{
     app.UseSwagger();
     app.UseSwaggerUI();
 

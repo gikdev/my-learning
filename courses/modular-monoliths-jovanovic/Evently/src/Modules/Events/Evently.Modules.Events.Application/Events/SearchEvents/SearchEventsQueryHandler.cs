@@ -3,16 +3,20 @@ using Dapper;
 using Evently.Common.Application.Data;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
+using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Application.Events.GetEvents;
 using Evently.Modules.Events.Domain.Events;
 
 namespace Evently.Modules.Events.Application.Events.SearchEvents;
 
 internal sealed class SearchEventsQueryHandler(IDbConnectionFactory dbConnectionFactory)
-    : IQueryHandler<SearchEventsQuery, SearchEventsResponse> {
+    : IQueryHandler<SearchEventsQuery, SearchEventsResponse>
+{
+
     public async Task<Result<SearchEventsResponse>> Handle(
         SearchEventsQuery request,
-        CancellationToken cancellationToken) {
+        CancellationToken cancellationToken)
+    {
         await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
 
         var parameters = new SearchEventsParameters(
@@ -32,7 +36,8 @@ internal sealed class SearchEventsQueryHandler(IDbConnectionFactory dbConnection
 
     private static async Task<IReadOnlyCollection<EventResponse>> GetEventsAsync(
         DbConnection connection,
-        SearchEventsParameters parameters) {
+        SearchEventsParameters parameters)
+    {
         const string sql =
             $"""
              SELECT
@@ -59,7 +64,8 @@ internal sealed class SearchEventsQueryHandler(IDbConnectionFactory dbConnection
         return events;
     }
 
-    private static async Task<int> CountEventsAsync(DbConnection connection, SearchEventsParameters parameters) {
+    private static async Task<int> CountEventsAsync(DbConnection connection, SearchEventsParameters parameters)
+    {
         const string sql =
             """
             SELECT COUNT(*)
