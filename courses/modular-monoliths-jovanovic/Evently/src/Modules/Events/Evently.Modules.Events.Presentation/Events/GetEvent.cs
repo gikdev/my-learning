@@ -11,7 +11,7 @@ internal static class GetEvent {
     public static void MapEndpoint(IEndpointRouteBuilder app) {
         app.MapGet("events/{id}", async ([FromRoute] Guid id, [FromServices] ISender sender) => {
             var query = new GetEventQuery(id);
-            var @event = (EventResponse?)await sender.Send(query);
+            EventResponse? @event = await sender.Send(query);
 
             return @event is null ? Results.NotFound() : Results.Ok(@event);
         }).WithTags(Tags.Events);
