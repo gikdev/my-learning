@@ -1,4 +1,5 @@
 
+using Evently.Api.Extensions;
 using Evently.Modules.Events.Api;
 
 namespace Evently.Api;
@@ -25,6 +26,8 @@ public static class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            app.ApplyMigrations();
         }
 
         EventsModule.MapEndpoints(app);
