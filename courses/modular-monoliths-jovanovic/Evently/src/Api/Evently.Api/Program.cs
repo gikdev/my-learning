@@ -9,12 +9,15 @@ ConfigurationManager config = builder.Configuration;
 builder.Services.AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => {
+    options.CustomSchemaIds(t => t.FullName?.Replace("+", "."));
+});
 
 builder.Services.AddApplication([
     Evently.Modules.Events.Application.AssemblyReference.Assembly,
 ]);
 builder.Services.AddInfrastructure(config.GetConnectionString("Database")!);
+builder.Configuration.AddModuleConfiguration(["events"]);
 builder.Services.AddEventsModule(config);
 
 WebApplication app = builder.Build();
