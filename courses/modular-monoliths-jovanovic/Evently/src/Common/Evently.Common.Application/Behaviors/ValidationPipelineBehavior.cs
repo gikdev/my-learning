@@ -8,15 +8,14 @@ using MediatR;
 namespace Evently.Common.Application.Behaviors;
 
 internal sealed class ValidationPipelineBehavior<TRequest, TResponse>(
-    IEnumerable<IValidator<TRequest>> validators
-) : IPipelineBehavior<TRequest, TResponse>
+    IEnumerable<IValidator<TRequest>> validators)
+    : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IBaseCommand
 {
     public async Task<TResponse> Handle(
         TRequest request,
         RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken
-    )
+        CancellationToken cancellationToken)
     {
         ValidationFailure[] validationFailures = await ValidateAsync(request);
 

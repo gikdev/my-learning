@@ -26,4 +26,3 @@ internal sealed class ExceptionHandlingPipelineBehavior<TRequest, TResponse>(
         }
     }
 }
-

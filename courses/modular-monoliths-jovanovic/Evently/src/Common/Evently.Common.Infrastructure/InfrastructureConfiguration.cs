@@ -16,8 +16,7 @@ public static class InfrastructureConfiguration
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         string databaseConnectionString,
-        string redisConnectionString
-    )
+        string redisConnectionString)
     {
         NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(databaseConnectionString).Build();
         services.TryAddSingleton(npgsqlDataSource);
@@ -29,9 +28,8 @@ public static class InfrastructureConfiguration
         IConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
         services.TryAddSingleton(connectionMultiplexer);
 
-        services.AddStackExchangeRedisCache(options =>options
-            .ConnectionMultiplexerFactory = () => Task.FromResult(connectionMultiplexer)
-        );
+        services.AddStackExchangeRedisCache(options =>
+            options.ConnectionMultiplexerFactory = () => Task.FromResult(connectionMultiplexer));
 
         services.TryAddSingleton<ICacheService, CacheService>();
 

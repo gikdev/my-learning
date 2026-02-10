@@ -33,9 +33,8 @@ services:
       - 8081:80
 
   evently.redis:
-    container_name: Evently.Redis
     image: redis:latest
+    container_name: Evently.Redis
     restart: always
     ports:
       - 6379:6379
-

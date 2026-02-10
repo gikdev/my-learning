@@ -18,8 +18,7 @@ internal sealed class CacheService(IDistributedCache cache) : ICacheService
         string key,
         T value,
         TimeSpan? expiration = null,
-        CancellationToken cancellationToken = default
-    )
+        CancellationToken cancellationToken = default)
     {
         byte[] bytes = Serialize(value);
 
@@ -42,4 +41,3 @@ internal sealed class CacheService(IDistributedCache cache) : ICacheService
         return buffer.WrittenSpan.ToArray();
     }
 }
-
