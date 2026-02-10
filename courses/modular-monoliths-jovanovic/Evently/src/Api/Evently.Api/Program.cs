@@ -7,8 +7,7 @@ namespace Evently.Api;
 public static class Program
 #pragma warning restore CA1515
 {
-    public static void Main(string[] args)
-    {
+    public static void Main(string[] args) {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         ConfigurationManager config = builder.Configuration;
 
@@ -21,8 +20,7 @@ public static class Program
 
         WebApplication app = builder.Build();
 
-        if (app.Environment.IsDevelopment())
-        {
+        if (app.Environment.IsDevelopment()) {
             app.UseSwagger();
             app.UseSwaggerUI();
 

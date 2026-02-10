@@ -1,7 +1,6 @@
 ﻿namespace Evently.Modules.Events.Presentation.Events;
 
-internal sealed record EventResponse
-{
+internal sealed record EventResponse {
     public required Guid Id { get; init; }
     public required string Title { get; init; }
     public required string Description { get; init; }

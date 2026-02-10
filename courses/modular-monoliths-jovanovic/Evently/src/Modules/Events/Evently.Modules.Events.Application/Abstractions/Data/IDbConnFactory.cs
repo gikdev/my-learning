@@ -2,7 +2,6 @@
 
 namespace Evently.Modules.Events.Application.Abstractions.Data;
 
-public interface IDbConnFactory
-{
+public interface IDbConnFactory {
     ValueTask<DbConnection> OpenConnectionAsync();
 }

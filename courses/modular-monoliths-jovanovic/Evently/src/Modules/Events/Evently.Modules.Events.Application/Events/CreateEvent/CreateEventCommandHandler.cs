@@ -7,10 +7,8 @@ namespace Evently.Modules.Events.Application.Events.CreateEvent;
 internal sealed class CreateEventCommandHandler(
     IEventRepo eventRepo,
     IUnitOfWork unitOfWork
-) : IRequestHandler<CreateEventCommand, Guid>
-{
-    public async Task<Guid> Handle(CreateEventCommand req, CancellationToken cancellationToken)
-    {
+) : IRequestHandler<CreateEventCommand, Guid> {
+    public async Task<Guid> Handle(CreateEventCommand req, CancellationToken cancellationToken) {
         var @event = Event.Create(
             endsAtUtc: req.EndsAtUtc,
             startsAtUtc: req.StartsAtUtc,

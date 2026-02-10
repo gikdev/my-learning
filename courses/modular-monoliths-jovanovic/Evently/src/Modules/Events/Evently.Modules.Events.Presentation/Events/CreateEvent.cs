@@ -7,19 +7,15 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Events.Presentation.Events;
 
-internal static class CreateEvent
-{
-    public static void MapEndpoint(IEndpointRouteBuilder app)
-    {
-        app.MapPost("events", async ([FromBody] Request request, [FromServices] ISender sender) =>
-        {
-            var command = new CreateEventCommand
-            {
+internal static class CreateEvent {
+    public static void MapEndpoint(IEndpointRouteBuilder app) {
+        app.MapPost("events", async ([FromBody] Request request, [FromServices] ISender sender) => {
+            var command = new CreateEventCommand {
                 Description = request.Description,
                 EndsAtUtc = request.EndsAtUtc,
                 Location = request.Location,
                 StartsAtUtc = request.StartsAtUtc,
-                Title = request.Title,
+                Title = request.Title
             };
 
             Guid eventId = await sender.Send(command);
@@ -28,8 +24,7 @@ internal static class CreateEvent
         }).WithTags(Tags.Events);
     }
 
-    internal sealed class Request
-    {
+    internal sealed class Request {
         public string Title { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }

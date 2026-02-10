@@ -2,8 +2,7 @@
 
 namespace Evently.Modules.Events.Domain.Events;
 
-public sealed class Event : Entity
-{
+public sealed class Event : Entity {
     private Event() { }
 
     public Guid Id { get; private set; }
@@ -20,17 +19,15 @@ public sealed class Event : Entity
         string location,
         DateTime startsAtUtc,
         DateTime? endsAtUtc
-    )
-    {
-        var @event = new Event
-        {
+    ) {
+        var @event = new Event {
             Id = Guid.NewGuid(),
             Title = title,
             Description = description,
             Location = location,
             EndsAtUtc = endsAtUtc,
             StartsAtUtc = startsAtUtc,
-            Status = EventStatus.Draft,
+            Status = EventStatus.Draft
         };
 
         @event.Raise(new EventCreatedDomainEvent(@event.Id));
