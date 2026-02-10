@@ -2,9 +2,14 @@ using Evently.Api.Extensions;
 using Evently.Common.Application;
 using Evently.Common.Infrastructure;
 using Evently.Modules.Events.Infrastructure;
+using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 ConfigurationManager config = builder.Configuration;
+
+builder.Host.UseSerilog((ctx, loggerConfig) => loggerConfig
+    .ReadFrom.Configuration(ctx.Configuration)
+);
 
 builder.Services.AddAuthorization();
 
@@ -30,5 +35,7 @@ if (app.Environment.IsDevelopment()) {
 }
 
 EventsModule.MapEndpoints(app);
+
+app.UseSerilogRequestLogging();
 
 app.Run();
