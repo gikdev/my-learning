@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Moduben.Infrastructure\Moduben.Infrastructure.csproj" />
+    <ProjectReference Include="..\Moduben.Modules.Main.Infrastructure\Moduben.Modules.Main.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
