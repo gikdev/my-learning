@@ -5,10 +5,7 @@ vars:
   # GREETING: Hello, World!
 
 dotenv:
-  - .env
-
-includes:
-  infra: ./infra
+  - ../.env
 
 tasks:
   default: task --list-all
