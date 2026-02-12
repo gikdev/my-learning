@@ -7,8 +7,17 @@ using Moduben.Modules.Main.Infrastructure;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
+using Npgsql;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+ConfigurationManager config  = builder.Configuration;
+string dbConnStr = new NpgsqlConnectionStringBuilder {
+    Host     = config.GetValue<string?>("DB_HOST")     ?? throw new Exception("DB_HOST not set"),
+    Port     = config.GetValue<int?>("DB_PORT")        ?? throw new Exception("DB_PORT not set"),
+    Database = config.GetValue<string?>("DB_NAME")     ?? throw new Exception("DB_NAME not set"),
+    Username = config.GetValue<string?>("DB_USER")     ?? throw new Exception("DB_USER not set"),
+    Password = config.GetValue<string?>("DB_PASSWORD") ?? throw new Exception("DB_PASSWORD not set")
+}.ConnectionString;
 
 builder.Host.UseSerilog((context, loggerConfig) => loggerConfig.ReadFrom.Configuration(context.Configuration));
 
@@ -21,21 +30,15 @@ builder.Services.AddApplication([
     Moduben.Modules.Main.Application.AssemblyReference.Assembly,
 ]);
 
-string databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
-string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
-
 builder.Services.AddInfrastructure(
-    [],
-    databaseConnectionString,
-    redisConnectionString
+    [MainModule.ConfigureConsumers],
+    dbConnStr
 );
 
 builder.Configuration.AddModuleConfiguration(["main"]);
 
 builder.Services.AddHealthChecks()
-    .AddNpgSql(databaseConnectionString)
-    .AddRedis(redisConnectionString)
-    .AddUrlGroup(new Uri(builder.Configuration.GetValue<string>("KeyCloak:HealthUrl")!), HttpMethod.Get, "keycloak");
+    .AddNpgSql(dbConnStr);
 
 builder.Services.AddMainModule(builder.Configuration);
 

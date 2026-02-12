@@ -13,3 +13,4 @@ includes:
 tasks:
   default: task --list-all
   restore: dotnet restore ./Moduben.slnx
+  run: dotnet run --project ./src/Moduben.Api/

@@ -11,7 +11,6 @@ using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Npgsql;
-using StackExchange.Redis;
 using Moduben.Common.Infrastructure.Interceptors;
 
 namespace Moduben.Common.Infrastructure;
@@ -20,8 +19,8 @@ public static class InfrastructureConfiguration {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
         Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
-        string databaseConnectionString,
-        string redisConnectionString) {
+        string databaseConnectionString
+    ) {
         services.AddAuthenticationInternal();
 
         services.AddAuthorizationInternal();
@@ -35,15 +34,7 @@ public static class InfrastructureConfiguration {
 
         services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
 
-        try {
-            IConnectionMultiplexer connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
-            services.TryAddSingleton(connectionMultiplexer);
-
-            services.AddStackExchangeRedisCache(options =>
-                options.ConnectionMultiplexerFactory = () => Task.FromResult(connectionMultiplexer));
-        } catch {
-            services.AddDistributedMemoryCache();
-        }
+        services.AddDistributedMemoryCache();
 
         services.TryAddSingleton<ICacheService, CacheService>();
 
