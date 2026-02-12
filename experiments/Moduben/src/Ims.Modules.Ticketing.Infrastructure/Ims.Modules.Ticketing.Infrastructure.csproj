@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ims.Common.Infrastructure\Ims.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\Ims.Common.Presentation\Ims.Common.Presentation.csproj" />
+    <ProjectReference Include="..\Ims.Modules.Ticketing.Application\Ims.Modules.Ticketing.Application.csproj" />
+    <ProjectReference Include="..\Ims.Modules.Ticketing.Presentation\Ims.Modules.Ticketing.Presentation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Authorization\" />
+  </ItemGroup>
+
+</Project>

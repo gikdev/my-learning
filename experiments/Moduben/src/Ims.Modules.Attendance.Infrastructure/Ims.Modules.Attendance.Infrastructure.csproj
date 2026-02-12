@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ims.Common.Infrastructure\Ims.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\Ims.Modules.Attendance.Application\Ims.Modules.Attendance.Application.csproj" />
+    <ProjectReference Include="..\Ims.Modules.Attendance.Presentation\Ims.Modules.Attendance.Presentation.csproj" />
+  </ItemGroup>
+
+</Project>

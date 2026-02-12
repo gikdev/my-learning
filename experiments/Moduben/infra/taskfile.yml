@@ -1,9 +1,6 @@
 # https://taskfile.dev
 version: '3'
 
-vars:
-  COMPOSE_FILE: docker-compose.yml
-
 dotenv:
   - ../.env
 
@@ -56,9 +53,9 @@ tasks:
     desc: Open psql shell inside container
     interactive: true
     cmds:
-      - docker exec -it moduben_db psql -U ${DB_USER} -d ${DB_NAME}
+      - docker exec -it moduben_db psql -U ${POSTGRES_USER} -d ${POSTGRES_DB}
 
   db:health:
     desc: Check DB readiness
     cmds:
-      - docker exec moduben_db pg_isready -U ${DB_USER}
+      - docker exec moduben_db pg_isready -U ${POSTGRES_USER}

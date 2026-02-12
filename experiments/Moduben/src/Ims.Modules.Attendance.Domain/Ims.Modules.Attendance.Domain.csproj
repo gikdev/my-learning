@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ims.Common.Domain\Ims.Common.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Ims.Modules.Attendance.UnitTests" />
+    <InternalsVisibleTo Include="Ims.UnitTests" />
+  </ItemGroup>
+
+</Project>

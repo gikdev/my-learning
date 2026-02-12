@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Ims.Modules.Events.Application\Ims.Modules.Events.Application.csproj" />
+    <ProjectReference Include="..\Ims.Modules.Events.Presentation\Ims.Modules.Events.Presentation.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+</Project>

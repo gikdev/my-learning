@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ims.Common.Presentation\Ims.Common.Presentation.csproj" />
+    <ProjectReference Include="..\Ims.Modules.Events.IntegrationEvents\Ims.Modules.Events.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\Ims.Modules.Users.IntegrationEvents\Ims.Modules.Users.IntegrationEvents.csproj" />
+    <ProjectReference Include="..\Ims.Modules.Ticketing.Application\Ims.Modules.Ticketing.Application.csproj" />
+  </ItemGroup>
+
+</Project>

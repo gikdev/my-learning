@@ -1,7 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\Moduben.Common.Presentation\Moduben.Common.Presentation.csproj" />
-    <ProjectReference Include="..\Moduben.Modules.Main.IntegrationEvents\Moduben.Modules.Main.IntegrationEvents.csproj" />
-    <ProjectReference Include="..\Moduben.Modules.Main.Application\Moduben.Modules.Main.Application.csproj" />
-  </ItemGroup>
-</Project>

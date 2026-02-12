@@ -1,0 +1,147 @@
+﻿using Ims.Common.Application.Authorization;
+using Ims.Common.Application.EventBus;
+using Ims.Common.Application.Messaging;
+using Ims.Common.Infrastructure.Outbox;
+using Ims.Common.Presentation.Endpoints;
+using Ims.Modules.Events.IntegrationEvents;
+using Ims.Modules.Ticketing.Application.Abstractions.Authentication;
+using Ims.Modules.Ticketing.Application.Abstractions.Data;
+using Ims.Modules.Ticketing.Application.Abstractions.Payments;
+using Ims.Modules.Ticketing.Application.Carts;
+using Ims.Modules.Ticketing.Domain.Customers;
+using Ims.Modules.Ticketing.Domain.Events;
+using Ims.Modules.Ticketing.Domain.Orders;
+using Ims.Modules.Ticketing.Domain.Payments;
+using Ims.Modules.Ticketing.Domain.Tickets;
+using Ims.Modules.Ticketing.Infrastructure.Authentication;
+using Ims.Modules.Ticketing.Infrastructure.Authorization;
+using Ims.Modules.Ticketing.Infrastructure.Customers;
+using Ims.Modules.Ticketing.Infrastructure.Database;
+using Ims.Modules.Ticketing.Infrastructure.Events;
+using Ims.Modules.Ticketing.Infrastructure.Inbox;
+using Ims.Modules.Ticketing.Infrastructure.Orders;
+using Ims.Modules.Ticketing.Infrastructure.Outbox;
+using Ims.Modules.Ticketing.Infrastructure.Payments;
+using Ims.Modules.Ticketing.Infrastructure.Tickets;
+using Ims.Modules.Ticketing.Presentation;
+using Ims.Modules.Users.IntegrationEvents;
+using MassTransit;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
+namespace Ims.Modules.Ticketing.Infrastructure;
+
+public static class TicketingModule {
+    public static IServiceCollection AddTicketingModule(
+        this IServiceCollection services,
+        IConfiguration          configuration
+    ) {
+        services.AddDomainEventHandlers();
+
+        services.AddIntegrationEventHandlers();
+
+        services.AddInfrastructure(configuration);
+
+        services.AddEndpoints(AssemblyReference.Assembly);
+
+        return services;
+    }
+
+    public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator, string instanceId) {
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>()
+            .Endpoint(c => c.InstanceId = instanceId);
+
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<UserProfileUpdatedIntegrationEvent>>()
+            .Endpoint(c => c.InstanceId = instanceId);
+
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<EventPublishedIntegrationEvent>>()
+            .Endpoint(c => c.InstanceId = instanceId);
+
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<TicketTypePriceChangedIntegrationEvent>>()
+            .Endpoint(c => c.InstanceId = instanceId);
+
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<EventCancellationStartedIntegrationEvent>>()
+            .Endpoint(c => c.InstanceId = instanceId);
+    }
+
+    private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration) {
+        services.AddDbContext<TicketingDbContext>((sp, options) =>
+            options
+                .UseNpgsql(
+                    configuration.GetConnectionString("Database"),
+                    npgsqlOptions => npgsqlOptions
+                        .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Ticketing))
+                .AddInterceptors(sp.GetRequiredService<InsertOutboxMessagesInterceptor>())
+                .UseSnakeCaseNamingConvention());
+
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<IEventRepository, EventRepository>();
+        services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<ITicketRepository, TicketRepository>();
+        services.AddScoped<IPaymentRepository, PaymentRepository>();
+
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<TicketingDbContext>());
+
+        services.AddSingleton<CartService>();
+        services.AddSingleton<IPaymentService, PaymentService>();
+
+        services.AddScoped<ICustomerContext, CustomerContext>();
+
+        services.Configure<OutboxOptions>(configuration.GetSection("Ticketing:Outbox"));
+
+        services.ConfigureOptions<ConfigureProcessOutboxJob>();
+
+        services.Configure<InboxOptions>(configuration.GetSection("Ticketing:Inbox"));
+
+        services.ConfigureOptions<ConfigureProcessInboxJob>();
+
+        services.AddScoped<IPermissionService, PermissionService>();
+    }
+
+    private static void AddDomainEventHandlers(this IServiceCollection services) {
+        Type[] domainEventHandlers = Application.AssemblyReference.Assembly
+            .GetTypes()
+            .Where(t => t.IsAssignableTo(typeof(IDomainEventHandler)))
+            .ToArray();
+
+        foreach (Type domainEventHandler in domainEventHandlers) {
+            services.TryAddScoped(domainEventHandler);
+
+            Type domainEvent = domainEventHandler
+                .GetInterfaces()
+                .Single(i => i.IsGenericType)
+                .GetGenericArguments()
+                .Single();
+
+            Type closedIdempotentHandler = typeof(IdempotentDomainEventHandler<>).MakeGenericType(domainEvent);
+
+            services.Decorate(domainEventHandler, closedIdempotentHandler);
+        }
+    }
+
+    private static void AddIntegrationEventHandlers(this IServiceCollection services) {
+        Type[] integrationEventHandlers = AssemblyReference.Assembly
+            .GetTypes()
+            .Where(t => t.IsAssignableTo(typeof(IIntegrationEventHandler)))
+            .ToArray();
+
+        foreach (Type integrationEventHandler in integrationEventHandlers) {
+            services.TryAddScoped(integrationEventHandler);
+
+            Type integrationEvent = integrationEventHandler
+                .GetInterfaces()
+                .Single(i => i.IsGenericType)
+                .GetGenericArguments()
+                .Single();
+
+            Type closedIdempotentHandler =
+                typeof(IdempotentIntegrationEventHandler<>).MakeGenericType(integrationEvent);
+
+            services.Decorate(integrationEventHandler, closedIdempotentHandler);
+        }
+    }
+}

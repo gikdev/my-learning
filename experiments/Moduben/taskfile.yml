@@ -2,7 +2,7 @@
 version: '3'
 
 vars:
-  STARTUP_PATH: "./src/Moduben.Api"
+  STARTUP_PATH: "./src/Ims.Api"
   MIGRATIONS_DIR: "Database/Migrations"
 
 dotenv:
@@ -10,13 +10,13 @@ dotenv:
 
 tasks:
   default: task --list-all
-  restore: dotnet restore ./Moduben.slnx
+  restore: dotnet restore ./Ims.slnx
 
   run:
     aliases: [r]
     desc: Run the project
     cmds:
-      - dotnet run --project ./src/Moduben.Api/
+      - dotnet run --project ./src/Ims.Api/
 
   run:prod:
     aliases: [rp]
@@ -24,7 +24,7 @@ tasks:
     dotenv:
       - .env.prod
     cmds:
-      - dotnet run --project ./src/Moduben.Api/
+      - dotnet run --project ./src/Ims.Api/
 
   migrate:
     aliases: [m]
@@ -39,7 +39,7 @@ tasks:
     cmds:
       - dotnet ef migrations add {{.MIGRATION_NAME}} -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}} -o {{.MIGRATIONS_DIR}}
     requires:
-      vars: [ MIGRATION_NAME, PROJECT_PATH, STARTUP_PATH, MIGRATIONS_DIR, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME ]
+      vars: [ MIGRATION_NAME, PROJECT_PATH, STARTUP_PATH, MIGRATIONS_DIR, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB ]
 
   migration:apply:
     aliases: [ma]
@@ -47,4 +47,4 @@ tasks:
     cmds:
       - dotnet ef database update -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}}
     requires:
-      vars: [ PROJECT_PATH, STARTUP_PATH, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME ]
+      vars: [ PROJECT_PATH, STARTUP_PATH, POSTGRES_HOST, POSTGRES_PORT, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB ]
