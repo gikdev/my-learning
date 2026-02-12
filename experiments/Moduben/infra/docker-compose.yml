@@ -3,7 +3,7 @@ name: moduben_infra
 services:
   moduben.db:
     container_name: Moduben.Db
-    image: postgres:18
+    image: postgres:16
     restart: on-failure
 
     environment:
@@ -28,6 +28,7 @@ services:
     image: datalust/seq:2025.2
     environment:
       - ACCEPT_EULA=Y
+      - SEQ_FIRSTRUN_NOAUTHENTICATION=true
     ports:
       - "${SEQ_INGEST_PORT}:5341"
       - "${SEQ_UI_PORT}:80"
