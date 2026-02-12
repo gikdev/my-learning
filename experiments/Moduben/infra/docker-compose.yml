@@ -25,7 +25,7 @@ services:
 
   moduben.seq:
     container_name: Moduben.Seq
-    image: datalust/seq:latest
+    image: datalust/seq:2025.2
     environment:
       - ACCEPT_EULA=Y
     ports:

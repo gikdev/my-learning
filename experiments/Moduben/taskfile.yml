@@ -7,9 +7,6 @@ vars:
 dotenv:
   - .env
 
-includes:
-  infra: ./infra
-
 tasks:
   default: task --list-all
   restore: dotnet restore ./Moduben.slnx

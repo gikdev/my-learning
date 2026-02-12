@@ -4,6 +4,9 @@ version: '3'
 vars:
   COMPOSE_FILE: docker-compose.yml
 
+dotenv:
+  - ../.env
+
 tasks:
   default:
     desc: List all available tasks
