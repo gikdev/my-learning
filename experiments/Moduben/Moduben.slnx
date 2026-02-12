@@ -1,13 +1,14 @@
 <Solution>
-  <Folder Name="/src/">
+  <Folder Name="/src/" />
+
+  <Folder Name="/src/Api/">
     <Project Path="src/Moduben.Api/Moduben.Api.csproj" />
-    <Project Path="src/Moduben.Application/Moduben.Application.csproj" />
+  </Folder>
+
+  <Folder Name="/src/Common/">
     <Project Path="src/Moduben.Common.Application/Moduben.Common.Application.csproj" />
     <Project Path="src/Moduben.Common.Domain/Moduben.Common.Domain.csproj" />
     <Project Path="src/Moduben.Common.Infrastructure/Moduben.Common.Infrastructure.csproj" />
     <Project Path="src/Moduben.Common.Presentation/Moduben.Common.Presentation.csproj" />
-    <Project Path="src/Moduben.Domain/Moduben.Domain.csproj" />
-    <Project Path="src/Moduben.Infrastructure/Moduben.Infrastructure.csproj" />
-    <Project Path="src/Moduben.Presentation/Moduben.Presentation.csproj" />
   </Folder>
 </Solution>
