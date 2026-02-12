@@ -11,7 +11,7 @@ using Moduben.Modules.Main.Application.Abstractions.Authentication;
 
 namespace Moduben.Modules.Main.Infrastructure;
 
-public static class AttendanceModule {
+public static class MainModule {
     public static IServiceCollection AddMainModule(
         this IServiceCollection services,
         IConfiguration configuration
@@ -38,6 +38,6 @@ public static class AttendanceModule {
 #pragma warning disable S125 // Sections of code should not be commented out
         // services.AddScoped<IAttendeeRepository, AttendeeRepository>();
 
-        services.AddScoped<IAttendanceContext, AttendanceContext>();
+        services.AddScoped<IMainCtx, MainCtx>();
     }
 }
