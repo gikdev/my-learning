@@ -1,0 +1,64 @@
+# https://taskfile.dev
+version: '3'
+
+vars:
+  COMPOSE_FILE: docker-compose.yml
+
+dotenv:
+  - ../.env
+
+tasks:
+  default:
+    desc: List all available tasks
+    cmds:
+      - task --list-all
+
+  up:
+    desc: Start all services (detached)
+    cmds:
+      - docker compose up -d
+
+  down:
+    desc: Stop all services (keep volumes)
+    cmds:
+      - docker compose down
+
+  restart:
+    desc: Restart services
+    cmds:
+      - task down
+      - task up
+
+  logs:
+    desc: Follow logs
+    cmds:
+      - docker compose logs -f
+
+  ps:
+    desc: Show running containers
+    cmds:
+      - docker compose ps
+
+  rebuild:
+    desc: Rebuild containers without cache
+    cmds:
+      - docker compose build --no-cache
+
+  reset:
+    desc: ⚠️ Stop and delete database data folder
+    cmds:
+      - docker compose down
+      - rm -rf ./.containers/
+      - mkdir -p ./.containers/
+      - docker compose up -d
+
+  db:shell:
+    desc: Open psql shell inside container
+    interactive: true
+    cmds:
+      - docker exec -it moduben_db psql -U ${DB_USER} -d ${DB_NAME}
+
+  db:health:
+    desc: Check DB readiness
+    cmds:
+      - docker exec moduben_db pg_isready -U ${DB_USER}
