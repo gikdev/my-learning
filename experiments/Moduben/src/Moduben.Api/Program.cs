@@ -8,6 +8,7 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 using Npgsql;
+using Scalar.AspNetCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 ConfigurationManager config  = builder.Configuration;
@@ -44,13 +45,14 @@ builder.Services.AddMainModule(builder.Configuration);
 
 WebApplication app = builder.Build();
 
-app.MapOpenApi();
-
 if (app.Environment.IsDevelopment()) {
     app.ApplyMigrations();
 }
 
+app.MapOpenApi();
+
 app.MapEndpoints();
+app.MapScalarApiReference();
 
 app.MapHealthChecks("health", new HealthCheckOptions {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse

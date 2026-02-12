@@ -2,7 +2,8 @@
 version: '3'
 
 vars:
-  # GREETING: Hello, World!
+  STARTUP_PATH: "./src/Moduben.Api"
+  MIGRATIONS_DIR: "Database/Migrations"
 
 dotenv:
   - .env
@@ -10,4 +11,32 @@ dotenv:
 tasks:
   default: task --list-all
   restore: dotnet restore ./Moduben.slnx
-  run: dotnet run --project ./src/Moduben.Api/
+
+  run:
+    aliases: [r]
+    desc: Run the project
+    cmds:
+      - dotnet run --project ./src/Moduben.Api/
+
+  migrate:
+    aliases: [m]
+    desc: Generate & run EF migrations for a given project
+    cmds:
+      - task: migration:generate
+      - task: migration:apply
+
+  migration:generate:
+    aliases: [mg]
+    desc: Generate EF migrations for a given project
+    cmds:
+      - dotnet ef migrations add {{.MIGRATION_NAME}} -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}} -o {{.MIGRATIONS_DIR}}
+    requires:
+      vars: [ MIGRATION_NAME, PROJECT_PATH, STARTUP_PATH, MIGRATIONS_DIR, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME ]
+
+  migration:apply:
+    aliases: [ma]
+    desc: Run EF migrations for a given project
+    cmds:
+      - dotnet ef database update -p {{.PROJECT_PATH}} -s {{.STARTUP_PATH}}
+    requires:
+      vars: [ PROJECT_PATH, STARTUP_PATH, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME ]
