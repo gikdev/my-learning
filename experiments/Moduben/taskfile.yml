@@ -18,6 +18,14 @@ tasks:
     cmds:
       - dotnet run --project ./src/Moduben.Api/
 
+  run:prod:
+    aliases: [rp]
+    desc: Run the project with production environment variables
+    dotenv:
+      - .env.prod
+    cmds:
+      - dotnet run --project ./src/Moduben.Api/
+
   migrate:
     aliases: [m]
     desc: Generate & run EF migrations for a given project
