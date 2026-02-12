@@ -7,7 +7,8 @@
 .containers
 
 # dotenv files
-.env
+.env*
+!.env*.example
 
 # User-specific files
 *.rsuser
