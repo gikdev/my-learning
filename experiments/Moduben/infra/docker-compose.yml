@@ -1,9 +1,9 @@
 name: moduben_infra
 
 services:
-  db:
+  moduben.db:
+    container_name: Moduben.Db
     image: postgres:18
-    container_name: moduben_db
     restart: on-failure
 
     environment:
@@ -15,10 +15,19 @@ services:
       - "${DB_PORT}:5432"
 
     volumes:
-      - ./.containers/postgres/data:/var/lib/postgresql/data
+      - ./.containers/db:/var/lib/postgresql/data
 
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+  moduben.seq:
+    container_name: Moduben.Seq
+    image: datalust/seq:latest
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "${SEQ_INGEST_PORT}:5341"
+      - "${SEQ_UI_PORT}:80"
