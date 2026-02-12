@@ -4,4 +4,8 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Moduben.Infrastructure\Moduben.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

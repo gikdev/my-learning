@@ -1,3 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <ItemGroup>
+    <ProjectReference Include="..\Moduben.Application\Moduben.Application.csproj" />
+    <ProjectReference Include="..\Moduben.Presentation\Moduben.Presentation.csproj" />
+  </ItemGroup>
 </Project>
