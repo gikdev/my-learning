@@ -1,5 +1,9 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Moduben.Api/Moduben.Api.csproj" />
+    <Project Path="src/Moduben.Application/Moduben.Application.csproj" />
+    <Project Path="src/Moduben.Domain/Moduben.Domain.csproj" />
+    <Project Path="src/Moduben.Infrastructure/Moduben.Infrastructure.csproj" />
+    <Project Path="src/Moduben.Presentation/Moduben.Presentation.csproj" />
   </Folder>
 </Solution>
