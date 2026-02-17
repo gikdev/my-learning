@@ -1,0 +1,7 @@
+﻿services:
+  essentials.api:
+    image: essentials.api
+    build:
+      context: .
+      dockerfile: src/Essentials.Api/Dockerfile
+
